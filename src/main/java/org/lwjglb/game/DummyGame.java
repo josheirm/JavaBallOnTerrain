@@ -23,6 +23,13 @@ public class DummyGame implements IGameLogic {
 
 	//glMatrixMode(GL_MODELVIEW);
 	
+	private static final float SIZE = 800;
+	private static final int VERTEX_COUNT = 128;
+	
+	private float x;
+	private float z;
+	
+	
 	float gZ = 0;
 	float gZForAdvance = 0;
 	float gRot = 0;
@@ -58,6 +65,58 @@ public class DummyGame implements IGameLogic {
         System.out.println("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
 
 //        GL.createCapabilities();
+        
+        //gameItem5
+        
+        
+        //generateTerrain(Loader loader){
+    		int count = VERTEX_COUNT * VERTEX_COUNT;
+    		float[] vertices = new float[count * 3];
+    		//float[] normals = new float[count * 3];
+    		float[] textureCoords = new float[count*2];
+    		int[] indices2 = new int[6*(VERTEX_COUNT-1)*(VERTEX_COUNT-1)];
+    		int vertexPointer = 0;
+    		for(int i=0;i<VERTEX_COUNT;i++){
+    			for(int j=0;j<VERTEX_COUNT;j++){
+    				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
+    				vertices[vertexPointer*3+1] = 0;
+    				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
+    				//normals[vertexPointer*3] = 0;
+    				//normals[vertexPointer*3+1] = 1;
+    				//normals[vertexPointer*3+2] = 0;
+    				textureCoords[vertexPointer*2] = (float)j/((float)VERTEX_COUNT - 1);
+    				textureCoords[vertexPointer*2+1] = (float)i/((float)VERTEX_COUNT - 1);
+    				vertexPointer++;
+    			}
+    		}
+    		int pointer = 0;
+    		for(int gz=0;gz<VERTEX_COUNT-1;gz++){
+    			for(int gx=0;gx<VERTEX_COUNT-1;gx++){
+    				int topLeft = (gz*VERTEX_COUNT)+gx;
+    				int topRight = topLeft + 1;
+    				int bottomLeft = ((gz+1)*VERTEX_COUNT)+gx;
+    				int bottomRight = bottomLeft + 1;
+    				indices2[pointer++] = topLeft;
+    				indices2[pointer++] = bottomLeft;
+    				indices2[pointer++] = topRight;
+    				indices2[pointer++] = topRight;
+    				indices2[pointer++] = bottomLeft;
+    				indices2[pointer++] = bottomRight;
+    			}
+    		}
+        
+    		Texture texture2 = new Texture("textures/grassblock.png");
+            // Mesh mesh = new Mesh(positions, textCoords, indices, texture);
+    		Mesh mesh2 = new Mesh(vertices, textureCoords, indices2, texture2);
+            
+           
+            GameItem gameItem5 = new GameItem(mesh2);
+            gameItem5.setScale(0.5f);
+            gameItem5.setPosition(0,0,-10);
+    		
+           camera.setPosition(0, 1,0);
+    		
+    		//////////////////
         
         // Create the Mesh
         float[] positions = new float[]{
@@ -143,8 +202,14 @@ public class DummyGame implements IGameLogic {
             16, 18, 19, 17, 16, 19,
             // Back face
             4, 6, 7, 5, 4, 7,};
+        
+        
+        
+        
         Texture texture = new Texture("textures/grassblock.png");
         Mesh mesh = new Mesh(positions, textCoords, indices, texture);
+        
+        //ball
         GameItem gameItem1 = new GameItem(mesh);
         
         
@@ -206,30 +271,30 @@ public class DummyGame implements IGameLogic {
         
         
         
-        gameItems = new GameItem[]{gameItem1,gameItem2, gameItem3, gameItem4};//, gameItem5};
+        gameItems = new GameItem[]{gameItem1,gameItem2, gameItem3, gameItem4, gameItem5};
     }
 
     @Override
     public void input(Window window, MouseInput mouseInput) {
       
-    	
-    	cameraInc.set(0, 0, 0);
+    	//camera.setPosition(0, 1, 10);
+    	cameraInc.set(0, -0, 0);
+    	//camera.setPosition(0, -10, 0);	
     	//GL32.glGetUniformLocation(1, "a");
     	//forward
     	
     	
     	if (window.isKeyPressed(GLFW_KEY_V)) {
     		
-    		gRot += 1;
-    		gameItems[0].setRotation(0, gRot, 0);
+    		gRot += .1;
+    		cameraInc.set(0, 0 + gRot, -10);
+    		gameItems[4].getPosition();//0, -10, 0);
     			   		
     		}
     	
     	if (window.isKeyPressed(GLFW_KEY_B)) {
-    		 gZ += .3;
-    		//camera.setRotation(0, gZ, 0);
-    		camera.setPosition(0, 0, -3);
-    		//gameItems[4].setPosition(0, 0, 0);
+    		gRot -= .1;
+    		cameraInc.set(0, -5 - gRot, 0);
     	}
     	
     	 if (window.isKeyPressed(GLFW_KEY_U)) {
@@ -255,7 +320,7 @@ public class DummyGame implements IGameLogic {
     	 if (window.isKeyPressed(GLFW_KEY_X)) {
     		 gZForAdvance += .3;
          	
-         	camera.setPosition(0, 0, gZForAdvance);
+         	camera.setPosition(0, 1, gZForAdvance);
          	
         	 }
     	 
@@ -263,7 +328,7 @@ public class DummyGame implements IGameLogic {
         if (window.isKeyPressed(GLFW_KEY_W)) {
         	gZForAdvance -= .3;
         	
-        	camera.setPosition(0, 0, gZForAdvance);
+        	camera.setPosition(0, 1, gZForAdvance);
         	
         	
         	

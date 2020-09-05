@@ -103,6 +103,11 @@ public class Renderer {
             // Render the mes for this game item
             gameItems[3].getMesh().render();
             
+            modelViewMatrix = transformation.getModelViewMatrix(gameItems[4], viewMatrix);
+            shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+            // Render the mes for this game item
+            gameItems[4].getMesh().render();
+            
             
         }
         
