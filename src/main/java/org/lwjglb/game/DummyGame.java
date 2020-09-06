@@ -70,49 +70,6 @@ public class DummyGame implements IGameLogic {
         
         
         //generateTerrain(Loader loader){
-    		int count = VERTEX_COUNT * VERTEX_COUNT;
-    		float[] vertices = new float[count * 3];
-    		//float[] normals = new float[count * 3];
-    		float[] textureCoords = new float[count*2];
-    		int[] indices2 = new int[6*(VERTEX_COUNT-1)*(VERTEX_COUNT-1)];
-    		int vertexPointer = 0;
-    		for(int i=0;i<VERTEX_COUNT;i++){
-    			for(int j=0;j<VERTEX_COUNT;j++){
-    				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
-    				vertices[vertexPointer*3+1] = 0;
-    				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
-    				//normals[vertexPointer*3] = 0;
-    				//normals[vertexPointer*3+1] = 1;
-    				//normals[vertexPointer*3+2] = 0;
-    				textureCoords[vertexPointer*2] = (float)j/((float)VERTEX_COUNT - 1);
-    				textureCoords[vertexPointer*2+1] = (float)i/((float)VERTEX_COUNT - 1);
-    				vertexPointer++;
-    			}
-    		}
-    		int pointer = 0;
-    		for(int gz=0;gz<VERTEX_COUNT-1;gz++){
-    			for(int gx=0;gx<VERTEX_COUNT-1;gx++){
-    				int topLeft = (gz*VERTEX_COUNT)+gx;
-    				int topRight = topLeft + 1;
-    				int bottomLeft = ((gz+1)*VERTEX_COUNT)+gx;
-    				int bottomRight = bottomLeft + 1;
-    				indices2[pointer++] = topLeft;
-    				indices2[pointer++] = bottomLeft;
-    				indices2[pointer++] = topRight;
-    				indices2[pointer++] = topRight;
-    				indices2[pointer++] = bottomLeft;
-    				indices2[pointer++] = bottomRight;
-    			}
-    		}
-        
-    		Texture texture2 = new Texture("textures/grassblock.png");
-            // Mesh mesh = new Mesh(positions, textCoords, indices, texture);
-    		Mesh mesh2 = new Mesh(vertices, textureCoords, indices2, texture2);
-            
-           
-            GameItem gameItem5 = new GameItem(mesh2);
-            gameItem5.setScale(0.5f);
-            gameItem5.setPosition(0,0,-10);
     		
            camera.setPosition(0, 1,0);
     		
@@ -239,16 +196,16 @@ public class DummyGame implements IGameLogic {
         
         GameItem gameItem2 = new GameItem(mesh);
         gameItem2.setScale(0.5f);
-        gameItem2.setPosition(0.0f, 0.0f, -10);
+        gameItem2.setPosition(0.0f, 0.25f, -10);
        
         //glPushMatrix();
         
         GameItem gameItem3 = new GameItem(mesh);
         gameItem3.setScale(0.5f);
-        gameItem3.setPosition(5, 0, -10);
+        gameItem3.setPosition(5, 0.25f, -10);
         GameItem gameItem4 = new GameItem(mesh);
         gameItem4.setScale(0.5f);
-        gameItem4.setPosition(-5f, 0, -10);
+        gameItem4.setPosition(-5f, 0.25f, -10);
         
         //GameItem gameItem5 = new GameItem(mesh);
         //gameItem5.setScale(0.5f);
@@ -268,7 +225,52 @@ public class DummyGame implements IGameLogic {
 //   	 gameItems[3].setPosition(-5f, 0, -10);
 //   	 
    	 
+        ////////////
+        int count = VERTEX_COUNT * VERTEX_COUNT;
+		float[] vertices = new float[count * 3];
+		//float[] normals = new float[count * 3];
+		float[] textureCoords = new float[count*2];
+		int[] indices2 = new int[6*(VERTEX_COUNT-1)*(VERTEX_COUNT-1)];
+		int vertexPointer = 0;
+		for(int i=0;i<VERTEX_COUNT;i++){
+			for(int j=0;j<VERTEX_COUNT;j++){
+				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
+				vertices[vertexPointer*3+1] = 0;
+				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
+				//normals[vertexPointer*3] = 0;
+				//normals[vertexPointer*3+1] = 1;
+				//normals[vertexPointer*3+2] = 0;
+				textureCoords[vertexPointer*2] = (float)j/((float)VERTEX_COUNT - 1);
+				textureCoords[vertexPointer*2+1] = (float)i/((float)VERTEX_COUNT - 1);
+				vertexPointer++;
+			}
+		}
+		int pointer = 0;
+		for(int gz=0;gz<VERTEX_COUNT-1;gz++){
+			for(int gx=0;gx<VERTEX_COUNT-1;gx++){
+				int topLeft = (gz*VERTEX_COUNT)+gx;
+				int topRight = topLeft + 1;
+				int bottomLeft = ((gz+1)*VERTEX_COUNT)+gx;
+				int bottomRight = bottomLeft + 1;
+				indices2[pointer++] = topLeft;
+				indices2[pointer++] = bottomLeft;
+				indices2[pointer++] = topRight;
+				indices2[pointer++] = topRight;
+				indices2[pointer++] = bottomLeft;
+				indices2[pointer++] = bottomRight;
+			}
+		}
+    
+		Texture texture2 = new Texture("textures/grassblock.png");
+        // Mesh mesh = new Mesh(positions, textCoords, indices, texture);
+		Mesh mesh2 = new Mesh(vertices, textureCoords, indices2, texture2);
         
+       
+        GameItem gameItem5 = new GameItem(mesh2);
+        gameItem5.setScale(0.005f);
+        gameItem5.setPosition(-2.56f + .5f,0,-10);
+		
+        ////////////
         
         
         gameItems = new GameItem[]{gameItem1,gameItem2, gameItem3, gameItem4, gameItem5};
@@ -277,6 +279,7 @@ public class DummyGame implements IGameLogic {
     @Override
     public void input(Window window, MouseInput mouseInput) {
       
+    	double sizeOfTerrain = 1024 * .005;
     	//camera.setPosition(0, 1, 10);
     	cameraInc.set(0, -0, 0);
     	//camera.setPosition(0, -10, 0);	
@@ -287,14 +290,14 @@ public class DummyGame implements IGameLogic {
     	if (window.isKeyPressed(GLFW_KEY_V)) {
     		
     		gRot += .1;
-    		cameraInc.set(0, 0 + gRot, -10);
+    		cameraInc.set(-5, 0 + gRot, -10);
     		gameItems[4].getPosition();//0, -10, 0);
     			   		
     		}
     	
     	if (window.isKeyPressed(GLFW_KEY_B)) {
     		gRot -= .1;
-    		cameraInc.set(0, -5 - gRot, 0);
+    		cameraInc.set(-5, -5 - gRot, 0);
     	}
     	
     	 if (window.isKeyPressed(GLFW_KEY_U)) {
