@@ -16,7 +16,7 @@ import org.lwjglb.engine.Window;
 import org.lwjglb.engine.graph.Camera;
 import org.lwjglb.engine.graph.Mesh;
 import org.lwjglb.engine.graph.Texture;
-
+import  org.joml.Math;
 
 
 public class DummyGame implements IGameLogic {
@@ -33,6 +33,14 @@ public class DummyGame implements IGameLogic {
 	float gZ = 0;
 	float gZForAdvance = 0;
 	float gRot = 0;
+	float angleOfRotation = 0;
+	float newX = 0;
+	float newZ = 0;
+	float oldX = 0;
+	float oldZ = -3.5f;
+	float angle = 0;
+	
+	
 	
     private static final float MOUSE_SENSITIVITY = 0.2f;
 
@@ -48,7 +56,9 @@ public class DummyGame implements IGameLogic {
     public Camera camera;
 
     private GameItem[] gameItems;
-
+    public GameItem[] terrainItems;
+    GameItem terrainObj[] = new GameItem[50];
+    
     private static final float CAMERA_POS_STEP = 0.05f;
 
     public DummyGame() {
@@ -190,8 +200,8 @@ public class DummyGame implements IGameLogic {
 //        gameItem5.setPosition(0, 0, -10);
 //      
         //ball
-        gameItem1.setScale(0.5f);
-        gameItem1.setPosition(0, 0, -5);
+        gameItem1.setScale(0.4f);
+        gameItem1.setPosition(0, -.7f, -3.5f);
         
         
         GameItem gameItem2 = new GameItem(mesh);
@@ -261,19 +271,156 @@ public class DummyGame implements IGameLogic {
 			}
 		}
     
-		Texture texture2 = new Texture("textures/grassblock.png");
+		//for(int i = 0; i < VERTEX_COUNT ; i++)wwwxx
+		//{
+		//textureCoords[0+i] = 0; 
+		//textureCoords[1+i] = 0;
+		//textureCoords[2+i] = 1;
+		//textureCoords[3+i] = 0;
+		//textureCoords[4+i] = 1f;
+		//textureCoords[5+i] = 1;
+		
+		//i = i +6;
+		//}
+		
+		
+		
+		
+		
+		Texture texture2 = new Texture("textures/grass.png");
         // Mesh mesh = new Mesh(positions, textCoords, indices, texture);
 		Mesh mesh2 = new Mesh(vertices, textureCoords, indices2, texture2);
         
-       
-        GameItem gameItem5 = new GameItem(mesh2);
-        gameItem5.setScale(0.005f);
-        gameItem5.setPosition(-2.56f + .5f,0,-10);
+       int a = (int) (800 * .007);
 		
-        ////////////
+        GameItem gameItem5 = new GameItem(mesh2);
+        gameItem5.setScale(0.007f);
+        gameItem5.setPosition(-2.50f + .5f,0,-10);
+		
         
+        
+    	//GameItem[] terrainItems(mesh2);// = {1};// = new GameItem();
+    	
+    	//GameItem terrainObj[] = new GameItem[16];
+    	for(int i = 0; i < 50; i++)
+    	{
+    	terrainObj[i] = new GameItem(mesh2);
+    	}
+    	
+    	
+        int i = 0;
+        	
+        	for(int terrainZ = 0; terrainZ < 4 ; terrainZ++)
+        	{
+        	for (int terrainX = 0; terrainX < 4 ; terrainX++)
+        	{
+        	
+        		
+        		terrainObj[i].setPosition(terrainX*800*.007f, 0, terrainZ*800*.007f - 10  );
+        		i++;
+        	}
+        		
+        	}
+        	i--;
+        	
+        	
+        	
+        	//terrainObj[0].setPosition(0,0,  - 10  );
+        	//terrainObj[0].setScale(.007f);
+        	//terrainObj[1].setPosition(0,0,   -5  );
+        	//terrainObj[1].setScale(.007f);
+    		
+        	int k = 1;
+        	for(int j = 0; j < 7 ; j++)
+        	{
+        	
+        		terrainObj[j].setPosition(-5 - .6f,0,  + (k*-5)  );
+            	terrainObj[j].setScale(.007f);
+            	
+        		k++;
+        		
+        	}
+        	k=1;
+        	for(int j = 7; j < 14 ; j++)
+        	{
+        	
+        		terrainObj[j].setPosition(-10 - 1.2f,0,  + (k*-5)  );
+            	terrainObj[j].setScale(.007f);
+            	
+        		k++;
+        		
+        	}
+        	k=1;
+        	for(int j = 14; j < 21 ; j++)
+        	{
+        	
+        		terrainObj[j].setPosition(-15 - .6f,0,  + (k*-5)  );
+            	terrainObj[j].setScale(.007f);
+            	
+        		k++;
+        		
+        	}
+        	k=1;
+        	for(int j = 21; j < 28 ; j++)
+        	{
+        	
+        		terrainObj[j].setPosition(0 - .6f,0,  + (k*-5)  );
+            	terrainObj[j].setScale(.007f);
+            	
+        		k++;
+        		
+        	}
+            	
+        	k=1;
+        	for(int j = 28; j < 35 ; j++)
+        	{
+        	
+        		terrainObj[j].setPosition(5 - .6f,0,  + (k*-5)  );
+            	terrainObj[j].setScale(.007f);
+            	
+        		k++;
+        		
+        	}
+            	
+        	k=1;
+        	for(int j = 35; j < 41 ; j++)
+        	{
+        	
+        		terrainObj[j].setPosition(10 - .6f,0,  + (k*-5)  );
+            	terrainObj[j].setScale(.007f);
+            	
+        		k++;
+        		
+        	}
+            	
+        	
+        	
+        	
+        	
+            	
+            /*terrainObj[0].setPosition(-5 - .6f,0,  - 5  );
+            terrainObj[0].setScale(.007f);
+            	
+            terrainObj[2].setPosition(-10 - .6f,0,  - 5  );
+            terrainObj[2].setScale(.007f);
+            	
+        	terrainObj[0].setPosition(-5 - .6f,0,  - 10  );
+        	terrainObj[0].setScale(.007f);
+        	
+        	terrainObj[2].setPosition(-10 - .6f,0,  - 10  );
+        	terrainObj[2].setScale(.007f);
+        	
+        	
+        	terrainObj[1].setPosition(0,0,   -10  );
+        	terrainObj[1].setScale(.007f);
+    		
+        	terrainObj[3].setPosition(5,0,  - 10  );
+        	terrainObj[3].setScale(.007f);
+        	*/
+    		
         
         gameItems = new GameItem[]{gameItem1,gameItem2, gameItem3, gameItem4, gameItem5};
+        terrainItems = new GameItem[]{gameItem1,gameItem2, gameItem3, gameItem4, gameItem5};
     }
 
     @Override
@@ -292,6 +439,7 @@ public class DummyGame implements IGameLogic {
     		gRot += .1;
     		cameraInc.set(-5, 0 + gRot, -10);
     		gameItems[4].getPosition();//0, -10, 0);
+    		terrainItems[4].getPosition();//0, -10, 0);
     			   		
     		}
     	
@@ -321,33 +469,82 @@ public class DummyGame implements IGameLogic {
     	 
     	 }
     	 if (window.isKeyPressed(GLFW_KEY_X)) {
-    		 gZForAdvance += .3;
+    		 float radius = .2f;
+         	float theta = camera.getRotation().y;//)m_rotationY;
          	
-         	camera.setPosition(0, 1, gZForAdvance);
+         	float phi = camera.getRotation().x;
+
+         	//These equations are from the wikipedia page, linked above
+         	float xMove = radius*Math.sin(phi)*Math.cos(theta);
+         	float yMove = radius*Math.sin(phi)*Math.sin(theta);
+         	float zMove = radius*Math.cos(phi);
+
+         	cameraInc.set(xMove, yMove, zMove);
+    		 
+    		 
+    		 
+    		 
+         	
          	
         	 }
     	 
     	 
         if (window.isKeyPressed(GLFW_KEY_W)) {
-        	gZForAdvance -= .3;
+        	//gZForAdvance -= .3;
+        	//camera.setPosition(0, 1, gZForAdvance);
         	
-        	camera.setPosition(0, 1, gZForAdvance);
+        	
+        	float radius = -.2f;
+        	float theta = camera.getRotation().y;//)m_rotationY;
+        	
+        	float phi = camera.getRotation().x;
+
+        	//These equations are from the wikipedia page, linked above
+        	float xMove = radius*Math.sin(phi)*Math.cos(theta);
+        	float yMove = radius*Math.sin(phi)*Math.sin(theta);
+        	float zMove = radius*Math.cos(phi);
+
+        	cameraInc.set(xMove, yMove, zMove);
+    	}
+        	//m_positionX += xMove;
+        	//m_positionY += yMove;
+        	//m_positionZ += zMove;
+        	
+        
+        	//newx = oldx + (cos(angle)*speed);
+        	//newz = oldz + (sin(angle)*speed);
+        	//Your angle has to be in radians (divide by 180 and multiply by pi if it is in degrees) if you use sin() and cos() in math.h
         	
         	
+        	//angleOfRotation = angleOfRotation + 90;
+        	
+        	//angle = 3.14f*(angleOfRotation/180);
+        	
+        	//newX = oldX + (Math.cos(angle)*.1f);
+        	//newZ = oldZ + (Math.sin(angle)*.1f);
+        	//oldX = newX;
+        	///oldZ = newZ;
+        	
+        	//camera.setPosition(newX, 1, newZ);
+        	//gameItems[0].setPosition(newX, 1, newZ);
+        	//angleOfRotation = angleOfRotation - 90;
         	
             
-        } if (window.isKeyPressed(GLFW_KEY_S)) {
+         if (window.isKeyPressed(GLFW_KEY_S)) {
             //cameraInc.z =+ 1;
-            gZ -= .3;
-	    	 //camera.setPosition(0, 0, -5);	
+            gZ += .3;
+	    	 //camera.setPosition(0, 0, -5);
+             //angleOfRotation = gZ;
 	    	 camera.setRotation(0, gZ, 0);
 	    	 
 	    	 
         }
         if (window.isKeyPressed(GLFW_KEY_A)) {
             //cameraInc.x =- 1;
-        	gZ += .3;
-	    	 //camera.setPosition(0, 0, -5);	
+        	gZ -= .3;
+	    	 //camera.setPosition(0, 0, -5);
+        	
+        	//angleOfRotation = gZ;
 	    	 camera.setRotation(0, gZ, 0);
 //	    	 gameItems[0].setRotation(0, 0, 0);
 //	    	 gameItems[0].setPosition(0, 0, -10);
@@ -472,7 +669,7 @@ public class DummyGame implements IGameLogic {
         
 		
 		gRot += 1;
-		gameItems[0].setRotation(0, gRot, 0);
+		//gameItems[0].setRotation(0, gRot, 0);
 		
 		camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
 
@@ -493,7 +690,7 @@ public class DummyGame implements IGameLogic {
 
     @Override
     public void render(Window window) {
-        renderer.render(window, camera, gameItems);
+        renderer.render(window, camera, gameItems, terrainObj);
     }
 
     @Override

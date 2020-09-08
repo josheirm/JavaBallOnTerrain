@@ -45,7 +45,7 @@ public class Renderer {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    public void render(Window window, Camera camera, GameItem[] gameItems) {
+    public void render(Window window, Camera camera, GameItem[] gameItems, GameItem[] terrainItems) {
         clear();
         
         if (window.isResized()) {
@@ -75,15 +75,10 @@ public class Renderer {
         //for (GameItem gameItem : gameItems)
         {
             
-        	// ball
-        	// Set model view matrix for this item
-            Matrix4f modelViewMatrix = transformation.getModelViewMatrix2(gameItems[0], viewMatrix);
-            shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
-            // Render the mes for this game item
-            gameItems[0].getMesh().render();
+        	
             
          // Set model view matrix for this item
-            modelViewMatrix = transformation.getModelViewMatrix(gameItems[1], viewMatrix);
+        	Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItems[1], viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mes for this game item
             gameItems[1].getMesh().render();
@@ -103,11 +98,29 @@ public class Renderer {
             // Render the mes for this game item
             gameItems[3].getMesh().render();
             
-            modelViewMatrix = transformation.getModelViewMatrix(gameItems[4], viewMatrix);
+            //modelViewMatrix = transformation.getModelViewMatrix(gameItems[4], viewMatrix);
+            //shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+            //// Render the mes for this game item
+            //gameItems[4].getMesh().render();
+            
+            
+            for (int i = 0; i< 41 ;i++)
+            {
+            modelViewMatrix = transformation.getModelViewMatrix(terrainItems[i], viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mes for this game item
-            gameItems[4].getMesh().render();
-            
+            terrainItems[i].getMesh().render();
+            }
+            //modelViewMatrix = transformation.getModelViewMatrix(terrainItems[1], viewMatrix);
+            //shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+            // Render the mes for this game item
+            //terrainItems[1].getMesh().render();
+         // ball
+        	// Set model view matrix for this item
+             modelViewMatrix = transformation.getModelViewMatrix2(gameItems[0], viewMatrix);
+            shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+            // Render the mes for this game item
+            gameItems[0].getMesh().render();
             
         }
         
