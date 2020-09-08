@@ -9,6 +9,11 @@ import org.joml.Vector3f;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.glfw.GLFW.*;
+
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import org.lwjglb.engine.GameItem;
 import org.lwjglb.engine.IGameLogic;
 import org.lwjglb.engine.MouseInput;
@@ -16,8 +21,11 @@ import org.lwjglb.engine.Window;
 import org.lwjglb.engine.graph.Camera;
 import org.lwjglb.engine.graph.Mesh;
 import org.lwjglb.engine.graph.Texture;
-import  org.joml.Math;
+import org.lwjglb.game.Terrain;
 
+import  org.joml.Math;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class DummyGame implements IGameLogic {
 
@@ -26,8 +34,8 @@ public class DummyGame implements IGameLogic {
 	private static final float SIZE = 800;
 	private static final int VERTEX_COUNT = 128;
 	
-	private float x;
-	private float z;
+	private int x;
+	private int z;
 	
 	
 	float gZ = 0;
@@ -39,7 +47,9 @@ public class DummyGame implements IGameLogic {
 	float oldX = 0;
 	float oldZ = -3.5f;
 	float angle = 0;
-	
+	//private static final float SIZE = 800;
+	private static final float MAX_HEIGHT = 40;
+	private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;
 	
 	
     private static final float MOUSE_SENSITIVITY = 0.2f;
@@ -54,6 +64,8 @@ public class DummyGame implements IGameLogic {
     private final Renderer renderer;
 
     public Camera camera;
+    
+    public Terrain terrain;
 
     private GameItem[] gameItems;
     public GameItem[] terrainItems;
@@ -66,13 +78,14 @@ public class DummyGame implements IGameLogic {
         renderer = new Renderer();
         camera = new Camera(player);
         cameraInc = new Vector3f();
+        terrain = new Terrain();
     }
 
     @Override
     public void init(Window window) throws Exception {
         renderer.init(window);
         
-        System.out.println("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
+        //System.out.println("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
 
 //        GL.createCapabilities();
         
@@ -200,8 +213,8 @@ public class DummyGame implements IGameLogic {
 //        gameItem5.setPosition(0, 0, -10);
 //      
         //ball
-        gameItem1.setScale(0.4f);
-        gameItem1.setPosition(0, -.7f, -3.5f);
+        gameItem1.setScale(0.5f);
+        gameItem1.setPosition(0, -.9f, -3.5f);
         
         
         GameItem gameItem2 = new GameItem(mesh);
@@ -217,25 +230,21 @@ public class DummyGame implements IGameLogic {
         gameItem4.setScale(0.5f);
         gameItem4.setPosition(-5f, 0.25f, -10);
         
-        //GameItem gameItem5 = new GameItem(mesh);
-        //gameItem5.setScale(0.5f);
-        //gameItem5.setPosition(0, 0, -10);
         
-     //ball
-//     gameItems[0].setRotation(0, 0, 0);
-//     gameItems[0].setPosition(0, 0, -5);
-//      	 
-//     gameItems[1].setRotation(0, 0, 0);
-//   	 gameItems[1].setPosition(0, 0, -10);
-//   	 
-//   	 gameItems[2].setRotation(0, 0, 0);
-//   	 gameItems[2].setPosition(5f, 0, -10);
-//   	 
-//   	 gameItems[3].setRotation(0, 0, 0);
-//   	 gameItems[3].setPosition(-5f, 0, -10);
-//   	 
-   	 
+        
+        BufferedImage image = null;
+        
+        try {
+        	image = ImageIO.read(new File("textures/" + "heightMap" + ".png"));
+            }
+        catch (IOException e) {
+        
+        	e.printStackTrace();
+        }
+        
         ////////////
+        
+        
         int count = VERTEX_COUNT * VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
 		//float[] normals = new float[count * 3];
@@ -245,8 +254,14 @@ public class DummyGame implements IGameLogic {
 		for(int i=0;i<VERTEX_COUNT;i++){
 			for(int j=0;j<VERTEX_COUNT;j++){
 				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
-				vertices[vertexPointer*3+1] = 0;
+				vertices[vertexPointer*3+1] = 1.5f* terrain.getHeight(j, i, image);
 				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
+				
+					
+					
+					
+				
+				
 				//normals[vertexPointer*3] = 0;
 				//normals[vertexPointer*3+1] = 1;
 				//normals[vertexPointer*3+2] = 0;
@@ -271,19 +286,6 @@ public class DummyGame implements IGameLogic {
 			}
 		}
     
-		//for(int i = 0; i < VERTEX_COUNT ; i++)wwwxx
-		//{
-		//textureCoords[0+i] = 0; 
-		//textureCoords[1+i] = 0;
-		//textureCoords[2+i] = 1;
-		//textureCoords[3+i] = 0;
-		//textureCoords[4+i] = 1f;
-		//textureCoords[5+i] = 1;
-		
-		//i = i +6;
-		//}
-		
-		
 		
 		
 		
@@ -394,6 +396,7 @@ public class DummyGame implements IGameLogic {
         	}
             	
         	
+        	//terrainObj[3].setPosition(-5 - .6f, 3,  + (k*-5)  );
         	
         	
         	
@@ -469,7 +472,7 @@ public class DummyGame implements IGameLogic {
     	 
     	 }
     	 if (window.isKeyPressed(GLFW_KEY_X)) {
-    		 float radius = .2f;
+    		 float radius = 2.2f;
          	float theta = camera.getRotation().y;//)m_rotationY;
          	
          	float phi = camera.getRotation().x;
@@ -494,7 +497,7 @@ public class DummyGame implements IGameLogic {
         	//camera.setPosition(0, 1, gZForAdvance);
         	
         	
-        	float radius = -.2f;
+        	float radius = -2.2f;
         	float theta = camera.getRotation().y;//)m_rotationY;
         	
         	float phi = camera.getRotation().x;
