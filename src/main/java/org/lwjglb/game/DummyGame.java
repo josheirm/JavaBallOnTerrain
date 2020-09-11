@@ -31,8 +31,9 @@ public class DummyGame implements IGameLogic {
 
 	//glMatrixMode(GL_MODELVIEW);
 	
-	private static final float SIZE = 800;
-	private static final int VERTEX_COUNT = 128;
+	//static final
+	private  float SIZE = 800;
+	private  int VERTEX_COUNT = 128;
 	
 	private int x;
 	private int z;
@@ -54,7 +55,7 @@ public class DummyGame implements IGameLogic {
 	
     private static final float MOUSE_SENSITIVITY = 0.2f;
 
-    //GameItem gameItem5 = new GameItem(mesh);
+    //GameItem gameItem5 = newx GameItem(mesh);
     
     
     //josh, this was final..
@@ -235,7 +236,7 @@ public class DummyGame implements IGameLogic {
         BufferedImage image = null;
         
         try {
-        	image = ImageIO.read(new File("textures/" + "heightMap" + ".png"));
+        	image = ImageIO.read(new File("textures/" + "heightMap1" + ".png"));
             }
         catch (IOException e) {
         
@@ -243,7 +244,46 @@ public class DummyGame implements IGameLogic {
         }
         
         ////////////
+        //2
+        //80
+        // each vertex is 40 pixels
         
+        
+        //get y value and apply y in these coordinates and displays smaller
+        VERTEX_COUNT = 80;
+        SIZE = 180f; // total size, each vertex is 60 pixels
+        
+        
+        //100/80
+        
+        //40/128 = 4 pixels
+        
+        
+        
+        
+       // 200 / 60
+        
+        //6 pixels
+        
+        
+        //VERTEX_COUNT = 4;
+        //SIZE = 160;
+        
+        //VERTEX_COUNT = 2;
+        //SIZE = 800;xx
+        
+        //size = 640;
+        
+        //       16
+        
+        //each vertex is size 4 = 8
+        //eacwxxxh move is 1
+        
+        // 80 / 100 = .8
+        // 80 / 80 = 1
+        
+        float a = 0;
+        a = 180f*.05f * 80 * 80; 
         
         int count = VERTEX_COUNT * VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
@@ -254,7 +294,7 @@ public class DummyGame implements IGameLogic {
 		for(int i=0;i<VERTEX_COUNT;i++){
 			for(int j=0;j<VERTEX_COUNT;j++){
 				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
-				vertices[vertexPointer*3+1] = 1.5f* terrain.getHeight(j, i, image);
+				vertices[vertexPointer*3+1] =  .5f*terrain.getHeight(j, i, image);
 				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
 				
 					
@@ -283,6 +323,10 @@ public class DummyGame implements IGameLogic {
 				indices2[pointer++] = topRight;
 				indices2[pointer++] = bottomLeft;
 				indices2[pointer++] = bottomRight;
+				
+				
+				
+				
 			}
 		}
     
@@ -293,10 +337,10 @@ public class DummyGame implements IGameLogic {
         // Mesh mesh = new Mesh(positions, textCoords, indices, texture);
 		Mesh mesh2 = new Mesh(vertices, textureCoords, indices2, texture2);
         
-       int a = (int) (800 * .007);
+       //int a = (int) (800 * .007);
 		
         GameItem gameItem5 = new GameItem(mesh2);
-        gameItem5.setScale(0.007f);
+        //gameItem5.setScale(0.007f);
         gameItem5.setPosition(-2.50f + .5f,0,-10);
 		
         
@@ -318,26 +362,24 @@ public class DummyGame implements IGameLogic {
         	{
         	
         		
-        		terrainObj[i].setPosition(terrainX*800*.007f, 0, terrainZ*800*.007f - 10  );
-        		i++;
+        		//terrainObj[i].setPosition(terrainX*800*.007f, 0, terrainZ*800*.007f - 10  );
+        		//i++;
         	}
         		
         	}
         	i--;
         	
         	
+        	//terrainObj[0].setScale(.05f);
+        	//terrainObj[0].setPosition(-0 - .6f,0,  + (1*-5)  );
         	
-        	//terrainObj[0].setPosition(0,0,  - 10  );
-        	//terrainObj[0].setScale(.007f);
-        	//terrainObj[1].setPosition(0,0,   -5  );
-        	//terrainObj[1].setScale(.007f);
     		
-        	int k = 1;
+        	float k = 1;
         	for(int j = 0; j < 7 ; j++)
         	{
         	
-        		terrainObj[j].setPosition(-5 - .6f,0,  + (k*-5)  );
-            	terrainObj[j].setScale(.007f);
+        		terrainObj[j].setPosition(-7.2f ,0,  + (k*-7.2f)  );
+            	terrainObj[j].setScale(.04f);
             	
         		k++;
         		
@@ -346,8 +388,8 @@ public class DummyGame implements IGameLogic {
         	for(int j = 7; j < 14 ; j++)
         	{
         	
-        		terrainObj[j].setPosition(-10 - 1.2f,0,  + (k*-5)  );
-            	terrainObj[j].setScale(.007f);
+        		terrainObj[j].setPosition(-14.4f ,0,  + (k*-7.2f)  );
+            	terrainObj[j].setScale(.04f);
             	
         		k++;
         		
@@ -356,8 +398,8 @@ public class DummyGame implements IGameLogic {
         	for(int j = 14; j < 21 ; j++)
         	{
         	
-        		terrainObj[j].setPosition(-15 - .6f,0,  + (k*-5)  );
-            	terrainObj[j].setScale(.007f);
+        		terrainObj[j].setPosition(-21.6f,0,  + (k*-7.2f)  );
+            	terrainObj[j].setScale(.04f);
             	
         		k++;
         		
@@ -366,8 +408,8 @@ public class DummyGame implements IGameLogic {
         	for(int j = 21; j < 28 ; j++)
         	{
         	
-        		terrainObj[j].setPosition(0 - .6f,0,  + (k*-5)  );
-            	terrainObj[j].setScale(.007f);
+        		terrainObj[j].setPosition(0 ,0,  + (k*-7.2f)  );
+            	terrainObj[j].setScale(.04f);
             	
         		k++;
         		
@@ -377,8 +419,8 @@ public class DummyGame implements IGameLogic {
         	for(int j = 28; j < 35 ; j++)
         	{
         	
-        		terrainObj[j].setPosition(5 - .6f,0,  + (k*-5)  );
-            	terrainObj[j].setScale(.007f);
+        		terrainObj[j].setPosition(7.2f,0,  + (k*-7.2f)  );
+            	terrainObj[j].setScale(.04f);
             	
         		k++;
         		
@@ -388,8 +430,8 @@ public class DummyGame implements IGameLogic {
         	for(int j = 35; j < 41 ; j++)
         	{
         	
-        		terrainObj[j].setPosition(10 - .6f,0,  + (k*-5)  );
-            	terrainObj[j].setScale(.007f);
+        		terrainObj[j].setPosition(14.4f,0,  + (k*-7.2f)  );
+            	terrainObj[j].setScale(.04f);
             	
         		k++;
         		
@@ -497,7 +539,7 @@ public class DummyGame implements IGameLogic {
         	//camera.setPosition(0, 1, gZForAdvance);
         	
         	
-        	float radius = -2.2f;
+        	float radius = -2f;
         	float theta = camera.getRotation().y;//)m_rotationY;
         	
         	float phi = camera.getRotation().x;
@@ -529,7 +571,7 @@ public class DummyGame implements IGameLogic {
         	///oldZ = newZ;
         	
         	//camera.setPosition(newX, 1, newZ);
-        	//gameItems[0].setPosition(newX, 1, newZ);
+        	//gamxeItems[0].setPosition(newX, 1, newZ);
         	//angleOfRotation = angleOfRotation - 90;
         	
             
@@ -564,10 +606,10 @@ public class DummyGame implements IGameLogic {
             
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
             //cameraInc.x = 1;
-            float yrotrad;
-            yrotrad = (player.rotation.y / 180 * 3.141592654f);
-            camera.position.x += cos(yrotrad * 0.3);
-            camera.position.z += sin(yrotrad) * 0.3;
+            //float yrotrad;
+           // yrotrad = (player.rotation.y / 180 * 3.141592654f);
+        	cameraInc.set(0, 0, -1);
+            //camera.position.z += sin(yrotrad) * 0.3;
         }
         
          
@@ -673,8 +715,11 @@ public class DummyGame implements IGameLogic {
 		
 		gRot += 1;
 		//gameItems[0].setRotation(0, gRot, 0);
-		
+		 GL11.glClear(GL11.GL_COLOR_BUFFER_BIT); 
 		camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
+		
+		
+		
 
 		//if(gZ < 10)
 		//{

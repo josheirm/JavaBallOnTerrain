@@ -1,5 +1,6 @@
 package org.lwjglb.engine.graph;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.system.MemoryUtil;
 //import static org.lwjgl.opengl.GL11.*;
 
@@ -110,7 +111,7 @@ public class Mesh {
         // Activate firs texture bank
     	
     	
-    	  
+    	 
         glActiveTexture(GL_TEXTURE0);
         // Bind the texture
         glBindTexture(GL_TEXTURE_2D, texture.getId());
@@ -118,6 +119,7 @@ public class Mesh {
         // Draw the mesh
         glBindVertexArray(getVaoId());
 
+       
         glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
 
         // Restore state
