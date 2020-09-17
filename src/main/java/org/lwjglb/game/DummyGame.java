@@ -249,7 +249,7 @@ public class DummyGame implements IGameLogic {
         ////////height16 *.5 = 8
         //-1
         
-        //gameItem1.setPosition(0, (-1.5f +.125f)/(20f/8f), -3.5f );
+        gameItem1.setPosition(0, (-1.5f +.125f)/(10f/8f), -3.5f );
         
         
         
@@ -454,7 +454,7 @@ public class DummyGame implements IGameLogic {
         	{
         	
         		//terrainObj[j].setPosition(-7.2f ,-1,  + (k*-7.2f)  );
-        		terrainObj[j].setPosition(-7.2f ,0,  + (k*-7.2f)  );
+        		terrainObj[j].setPosition(-7.2f ,-1,  + (k*-7.2f)  );
         		terrainObj[j].setScale(.04f);
             	
         		k++;
