@@ -1,3 +1,5 @@
+
+
 package org.lwjglb.game;
 
 import  org.lwjgl.opengl.GL11;
@@ -32,12 +34,24 @@ public class DummyGame implements IGameLogic {
 	//glMatrixMode(GL_MODELVIEW);
 	
 	//static final
-	private  float SIZE = 800;
-	private  int VERTEX_COUNT = 128;
+	private  float SIZE = 180f;
+	private  int VERTEX_COUNT = 80;
+	
+	
+	//private  float SIZE = 800f;
+	//private  int VERTEX_COUNT = 10;
+	
+	float[][] theHeight = new float[VERTEX_COUNT+80][VERTEX_COUNT+80];
 	
 	private int x;
 	private int z;
 	
+	float worldX = 34.5f;
+	float worldZ = (179f - 3.5f);
+	float accumulatedX = 0;//30f * .05f;
+	float accumulatedZ = -3.5f * .05f;
+	float containingX = 0f;
+	float containingZ = 0f; 
 	
 	float gZ = 0;
 	float gZForAdvance = 0;
@@ -83,8 +97,7 @@ public class DummyGame implements IGameLogic {
     }
 
     @Override
-    public void init(Window window) throws Exception {
-        renderer.init(window);
+    public void init(Window window) throws Exception {        renderer.init(window);
         
         //System.out.println("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
 
@@ -93,8 +106,12 @@ public class DummyGame implements IGameLogic {
         //gameItem5
         
         
+        float ga = 0.0f;
+        ga = 77f * .08f;
+        
         //generateTerrain(Loader loader){
     		
+           //camera.setRotation((1), .5f, 0);
            camera.setPosition(0, 1,0);
     		
     		//////////////////
@@ -193,15 +210,58 @@ public class DummyGame implements IGameLogic {
         //ball
         GameItem gameItem1 = new GameItem(mesh);
         
+        	
+        	 // -20/20  -.5 = -1.5
+        	 //
+     		 //gameItem1.setPosition(0, -1f + .5f , -3.5f);
         
-//        gameItem1.setScale(0.5f);
+        //the hundreths place does not affect any change of ball on terrain
+        gameItem1.setScale(.5f);
+        //put a value here as half the real value 
+        //gameItem1.setPosition(0f, -2.f + .25f + .25f, -3.5f);
+        float y = 0;
+        
+       
+        
+        ///////////height : 20 * .5 = 10
+        
+        // 0 : terrains positioning
+        //gameItem1.setPosition(0f, -.5f+.125f, -3.5f );
+        
+        //-1 : terrains positioning
+        //gameItem1.setPosition(0f, -1.5f+.250f, -3.5f );     
+     	  
+        
+        
+        
+        //////////height10 * .5 = 5
+        
+        //0
+        //gameItem1.setPosition(0, (-.5f +.125f)/2 , -3.5f );
+        
+        
+        //-1
+        //gameItem1.setPosition(0, (-1.5f +.125f)/2 , -3.5f );
+        
+        
+        
+        
+        ////////height16 *.5 = 8
+        //-1
+        
+        //gameItem1.setPosition(0, (-1.5f +.125f)/(20f/8f), -3.5f );
+        
+        
+        
+        
+        gameItem1.setScale(0.5f);
 //        gameItem1.setPosition(0.5f, 0.5f, -5);
 //        GameItem gameItem2 = new GameItem(mesh);
 //        gameItem2.setScale(0.5f);
-//        gameItem2.setPosition(0.5f, 0.5f, -5);
+//        gameItem2.setPwosition(0.5f, 0.5f, -5);
 //       
 //        //glPushMatrix();
-//        
+//        ww
 //        GameItem gameItem3 = new GameItem(mesh);
 //        gameItem3.setScale(0.5f);
 //        gameItem3.setPosition(0, 0, -5);
@@ -214,13 +274,23 @@ public class DummyGame implements IGameLogic {
 //        gameItem5.setPosition(0, 0, -10);
 //      
         //ball
-        gameItem1.setScale(0.5f);
-        gameItem1.setPosition(0, -.9f, -3.5f);
+       
+        //ball is 1 unit, so flat area is at :  -.7f  
+        
+        //0 + 1    :  1 x X = 1.60
+       
+        //camera position = 0,1,0
+        
+       //3.5f/7.2f*80f;
+        
+        //gameItem1.setPosition(0f, terrain.getTheHeight(400f, 400 , 0, 0f ,  theHeight), camera.position.z-3.5f );
+        
+        //gameItem1.setPosition(0f, 	.5f*terrain.getTheHeight(40f*2.25f, 80f*2.25f - (accumulatedZ) , 	0, 0f ,  theHeight), camera.position.z-3.5f );
         
         
         GameItem gameItem2 = new GameItem(mesh);
-        gameItem2.setScale(0.5f);
-        gameItem2.setPosition(0.0f, 0.25f, -10);
+        gameItem2.setScale(0.4f);
+        gameItem2.setPosition(0.0f, 0.25f * .05f, -10);
        
         //glPushMatrix();
         
@@ -236,7 +306,7 @@ public class DummyGame implements IGameLogic {
         BufferedImage image = null;
         
         try {
-        	image = ImageIO.read(new File("textures/" + "heightMap1" + ".png"));
+        	image = ImageIO.read(new File("textures/" + "heightMap1" + ".bmp"));
             }
         catch (IOException e) {
         
@@ -250,8 +320,8 @@ public class DummyGame implements IGameLogic {
         
         
         //get y value and apply y in these coordinates and displays smaller
-        VERTEX_COUNT = 80;
-        SIZE = 180f; // total size, each vertex is 60 pixels
+        //VERTEX_COUNT = 80;
+        //SIZE = 180f; // total size, each vertex is 60 pixels
         
         
         //100/80
@@ -282,8 +352,11 @@ public class DummyGame implements IGameLogic {
         // 80 / 100 = .8
         // 80 / 80 = 1
         
+        
+        
         float a = 0;
-        a = 180f*.05f * 80 * 80; 
+        a = 81%40;// * 80 * 80; 
+        a = 0%40;
         
         int count = VERTEX_COUNT * VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
@@ -294,7 +367,10 @@ public class DummyGame implements IGameLogic {
 		for(int i=0;i<VERTEX_COUNT;i++){
 			for(int j=0;j<VERTEX_COUNT;j++){
 				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
-				vertices[vertexPointer*3+1] =  .5f*terrain.getHeight(j, i, image);
+				//base is at : 2.9019595   //  -40
+				float height =.5f* terrain.getHeight(j, i, image);
+				vertices[vertexPointer*3+1] =  height;
+				theHeight[j][i] = height;
 				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
 				
 					
@@ -330,8 +406,7 @@ public class DummyGame implements IGameLogic {
 			}
 		}
     
-		
-		
+		 
 		
 		Texture texture2 = new Texture("textures/grass.png");
         // Mesh mesh = new Mesh(positions, textCoords, indices, texture);
@@ -369,17 +444,18 @@ public class DummyGame implements IGameLogic {
         	}
         	i--;
         	
-        	
-        	//terrainObj[0].setScale(.05f);
-        	//terrainObj[0].setPosition(-0 - .6f,0,  + (1*-5)  );
+        	//ball sits on plane at y = -.5
+        	terrainObj[0].setScale(.04f);
+        	terrainObj[0].setPosition(0f , 1f,  0)  ;
         	
     		
         	float k = 1;
         	for(int j = 0; j < 7 ; j++)
         	{
         	
+        		//terrainObj[j].setPosition(-7.2f ,-1,  + (k*-7.2f)  );
         		terrainObj[j].setPosition(-7.2f ,0,  + (k*-7.2f)  );
-            	terrainObj[j].setScale(.04f);
+        		terrainObj[j].setScale(.04f);
             	
         		k++;
         		
@@ -468,7 +544,7 @@ public class DummyGame implements IGameLogic {
         terrainItems = new GameItem[]{gameItem1,gameItem2, gameItem3, gameItem4, gameItem5};
     }
 
-    @Override
+    //@Override
     public void input(Window window, MouseInput mouseInput) {
       
     	double sizeOfTerrain = 1024 * .005;
@@ -514,7 +590,12 @@ public class DummyGame implements IGameLogic {
     	 
     	 }
     	 if (window.isKeyPressed(GLFW_KEY_X)) {
-    		 float radius = 2.2f;
+    		 float radius = 1f;
+    		 
+    		 
+    		 
+         	
+         	
          	float theta = camera.getRotation().y;//)m_rotationY;
          	
          	float phi = camera.getRotation().x;
@@ -524,6 +605,50 @@ public class DummyGame implements IGameLogic {
          	float yMove = radius*Math.sin(phi)*Math.sin(theta);
          	float zMove = radius*Math.cos(phi);
 
+         	accumulatedZ =+ zMove;
+         	
+         	//gameItems[0].setPosition(0f, 	terrain.getTheHeight(45f*2.25f + (accumulatedX), 79f*2.25f + (accumulatedZ) , 	0, 0f ,  theHeight), camera.position.z-3.5f );
+         	//gameItems[0].setPosition(0f, 	terrain.getTheHeight((accumulatedX), (accumulatedZ) , containingX, containingZ ,  theHeight), camera.position.z-3.5f );
+            
+    		
+         	/*if (accumulatedZ > (-7.2f * 1))
+         	{
+         		
+         		containingZ = 1 * -7.2f;
+         	}
+         	
+         	if (accumulatedZ > (-7.2f * 2))
+         	{
+         		
+         		containingZ = 2 * -7.2f;
+         	}
+         	if (accumulatedZ > (-7.2f * 3))
+         	{
+         		
+         		containingZ = 3 * -7.2f;
+         	}
+         	if (accumulatedZ > (-7.2f * 4))
+         	{
+         		
+         		containingZ = 4 * -7.2f;
+         	}
+         	if (accumulatedZ > (-7.2f * 5))
+         	{
+         		
+         		containingZ = 5 * -7.2f;
+         	}
+         	if (accumulatedZ > (-7.2f * 6))
+         	{
+         		
+         		containingZ = 6 * -7.2f;
+         	}
+         	if (accumulatedZ > (-7.2f * 7))
+         	{
+         		
+         		containingZ = 7 * -7.2f;
+         	}
+         	
+         	*/
          	cameraInc.set(xMove, yMove, zMove);
     		 
     		 
@@ -539,7 +664,12 @@ public class DummyGame implements IGameLogic {
         	//camera.setPosition(0, 1, gZForAdvance);
         	
         	
-        	float radius = -2f;
+        	float radius = -1f;
+        	
+        	
+        	
+        	
+        	
         	float theta = camera.getRotation().y;//)m_rotationY;
         	
         	float phi = camera.getRotation().x;
@@ -549,6 +679,129 @@ public class DummyGame implements IGameLogic {
         	float yMove = radius*Math.sin(phi)*Math.sin(theta);
         	float zMove = radius*Math.cos(phi);
 
+        	
+        	int a = 0;
+        	
+        	
+        	
+        	//on scaled terrain
+        	accumulatedX = accumulatedX  + xMove / 20f ;
+        	accumulatedZ = accumulatedZ  + zMove / 20f ;	
+        		
+        	System.out.println(xMove);
+        	System.out.println(zMove);
+        	System.out.println("");
+        	worldX = worldX + xMove ;
+        	worldZ = worldZ + zMove;
+        	
+        		/*
+        		if (accumulatedX > 3.95 * 3)
+            	{
+            		containingX = 3.95f * 3;
+            		
+            	}
+        		if (accumulatedX > 3.95 * 2)
+            	{
+            		containingX = 3.95f * 2;
+            		
+            	}
+        		if (accumulatedX > 3.95 )
+            	{
+            		containingX = 3.95f;
+            		
+            	}
+        		//3.95 = 80 steps at .05 a step
+        		
+        		
+        		if (accumulatedX < -3.95 * 4 )
+            	{
+            		containingX = -3.95f * 4;
+            		
+            	}
+        		
+        		if (accumulatedX < -3.95 * 3)
+            	{
+            		containingX = -3.95f * 3;
+            		
+            	}
+        		if (accumulatedX < -3.95 * 2)
+            	{
+            		containingX = -3.95f * 2;
+            		
+            	}
+        		if (accumulatedX < 0)
+            	{
+            		containingX = -3.95f;
+            		
+            	}
+        		
+        		
+        		//going towards user
+        		if (accumulatedZ > 3.95 * 3)
+            	{
+            		containingZ = 3.95f * 3;
+            		
+            	}
+        		if (accumulatedZ > 3.95 * 2)
+            	{
+            		containingZ = 3.95f * 2;
+            		
+            	}
+        		if (accumulatedZ > 3.95 )
+            	{
+            		containingZ = 3.95f;
+            		
+            	}
+        		//3.95 = 80 steps at .05 a step
+        		
+        		
+        		//going into screen
+        		if (accumulatedZ < -3.95 * 3 )
+            	{
+            		containingZ = -3.95f * 3;
+            		
+            	}
+        		
+        		if (accumulatedZ < -3.95 * 2)
+            	{
+            		containingZ = -3.95f * 2;
+            		
+            	}
+        		if (accumulatedZ < -3.95 * 1)
+            	{
+            		containingZ = -3.95f;
+            		
+            	}
+        		
+        		*/
+        	
+        	
+        	//////
+        	
+        	
+        	//Vector3f vec = null;
+        	//vec = renderer.getVector();
+        	//Vector3f aab  = new Vector3f();
+        	///aab = terrainObj[8].getPosition();
+        	
+        	//vec = camera.getPosition();
+        	
+        	//gameItems[0].setPosition(accumulatedX1, 	.05f*.04f* terrain.getTheHeight(40f*2.25f + accumulatedX, 79f*2.25f + (accumulatedZ) , 	containingX, containingZ ,  theHeight)    , -3.5f  );
+        	
+        		
+        		float answer = terrain.getTheHeight(worldX, worldZ , 	containingX, containingZ ,  theHeight); 
+        		
+        	//containingZ = 79f * 2f;
+        	//gameItems[0].setPosition(accumulatedX ,  .6f*.04f*terrain.getTheHeight(worldX, worldZ , 	containingX, containingZ ,  theHeight)    , -3.5f  );
+        	
+        	//gameItems[0].setPosition(accumulatedX ,  1.3f,    -3.5f  );
+        	
+        	
+        	//////
+        	
+        	
+        	
+        	
         	cameraInc.set(xMove, yMove, zMove);
     	}
         	//m_positionX += xMove;

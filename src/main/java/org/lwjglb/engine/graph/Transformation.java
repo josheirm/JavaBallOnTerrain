@@ -55,7 +55,7 @@ public class Transformation {
                 rotateY((float)Math.toRadians(-rotation.y)).
                 rotateZ((float)Math.toRadians(-rotation.z)).
                 scale(gameItem.getScale());
-        //Matrix4f viewCurr = new Matrix4f(viewMatrix);
+        Matrix4f viewCurr = new Matrix4f(viewMatrix);
         return (modelViewMatrix);
         
         

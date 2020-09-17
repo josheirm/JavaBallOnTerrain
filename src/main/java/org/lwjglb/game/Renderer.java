@@ -8,12 +8,32 @@ import org.lwjglb.engine.Window;
 import org.lwjglb.engine.graph.Camera;
 import org.lwjglb.engine.graph.ShaderProgram;
 import org.lwjglb.engine.graph.Transformation;
+import org.joml.Vector3f;
+import org.joml.Vector2f;
+
 
 public class Renderer {
 
     /**
      * Field of View in Radians
      */
+	
+	public float vx1 = .10f;
+	public float vy1 = .10f;
+	public float vz1 = .10f;
+	Vector3f vector1  = new Vector3f();
+	
+	
+	public Vector3f getVector()
+	{
+		
+		vector1.x = vx1;
+		vector1.y = vy1;
+		vector1.z = vz1;
+		
+		return vector1;
+		
+	}
     private static final float FOV = (float) Math.toRadians(60.0f);
 
     private static final float Z_NEAR = 0.01f;
@@ -104,13 +124,24 @@ public class Renderer {
             //gameItems[4].getMesh().render();
             
             
-            for (int i = 0; i< 41 ;i++)
+            for (int i = 0; i< 1 ;i++)
             {
             modelViewMatrix = transformation.getModelViewMatrix(terrainItems[i], viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mes for this game item
             terrainItems[i].getMesh().render();
+            
+            
+           
+            
             }
+            
+            vx1 = viewMatrix.m20();
+            vy1 = viewMatrix.m21();
+            vz1 = viewMatrix.m22();
+            
+            
+            
             //modelViewMatrix = transformation.getModelViewMatrix(terrainItems[1], viewMatrix);
             //shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mes for this game item
