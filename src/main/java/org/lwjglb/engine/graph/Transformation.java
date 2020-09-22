@@ -49,12 +49,27 @@ public class Transformation {
     }
     //ball
     public Matrix4f getModelViewMatrix2(GameItem gameItem, Matrix4f viewMatrix) {
+    	
+    	Mesh mesh = null;
+    	GameItem theHolder = new GameItem(mesh);
+    	//GameItem theHolder = null;
+    	Vector3f holder = gameItem.getPosition();
+    	holder.x = 1;
+    	holder.y = 0;
+    	holder.z = 1f;
+    	theHolder.setPosition(holder.x, holder.y, holder.z);
+    	
+    	holder.x = -holder.x;
+    	holder.y = -holder.y;
+    	holder.z = -holder.z;
+    	gameItem.setPosition(holder.x, holder.y, holder.z);
+    	
         Vector3f rotation = gameItem.getRotation();
         modelViewMatrix.identity().translate(gameItem.getPosition()).
                 rotateX((float)Math.toRadians(-rotation.x)).
                 rotateY((float)Math.toRadians(-rotation.y)).
                 rotateZ((float)Math.toRadians(-rotation.z)).
-                scale(gameItem.getScale());
+                scale(gameItem.getScale());//.translate(theHolder.getPosition());
         Matrix4f viewCurr = new Matrix4f(viewMatrix);
         return (modelViewMatrix);
         

@@ -148,7 +148,7 @@ public class Renderer {
             //terrainItems[1].getMesh().render();
          // ball
         	// Set model view matrix for this item
-             modelViewMatrix = transformation.getModelViewMatrix2(gameItems[0], viewMatrix);
+             modelViewMatrix = transformation.getModelViewMatrix(gameItems[0], viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mes for this game item
             gameItems[0].getMesh().render();
