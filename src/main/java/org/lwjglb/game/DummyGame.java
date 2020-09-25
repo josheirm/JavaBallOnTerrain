@@ -39,7 +39,14 @@ public class DummyGame implements IGameLogic {
 	private  float SIZE = 180f;
 	private  int VERTEX_COUNT = 80;
 	
+	float wCounter = 0;
+	float xBallDirectionFinal = 0;
+	float zBallDirectionFinal = 0;
 	
+	float xBallDistance  = 0;
+	float zBallDistance  = 0;
+	
+	float angleForBall = 0;
 	//private  float SIZE = 800f;
 	//private  int VERTEX_COUNT = 10;
 	
@@ -63,7 +70,7 @@ public class DummyGame implements IGameLogic {
 	float containingX = 0f;
 	float containingZ = 0f; 
 	
-	float gZ1 = 0;
+	float gY1 = 0;
 	float gZ = 0;
 	float gZForAdvance = 0;
 	float gRot = 0;
@@ -608,7 +615,7 @@ public class DummyGame implements IGameLogic {
     }
 
     //@Override
-    public void input(Window window, MouseInput mouseInput)  {
+    public int input(Window window, MouseInput mouseInput)  {
       
     	double sizeOfTerrain = 1024 * .005;
     	//camera.setPosition(0, 1, 10);
@@ -646,16 +653,12 @@ public class DummyGame implements IGameLogic {
     		 
          	
          	
-         	float theta = camera.getRotation().y;//)m_rotationY;
-         	
-         	float phi = camera.getRotation().x;
-
-         	//These equations are from the wikipedia page, linked above
-         	float xMove = radius*Math.sin(phi)*Math.cos(theta);
-         	float yMove = radius*Math.sin(phi)*Math.sin(theta);
-         	float zMove = radius*Math.cos(phi);
-
-         	accumulatedZ =+ zMove;
+    		 gZ += .05;// * 144; 
+    		 gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, -1 -2.5f+gZ );// - (+ 7.6f/2f ) );
+             
+        	 
+        	 
+       	  gameItems[0].setScale(.25f);
          	
          	//gameItems[0].setPosition(0f, 	terrain.getTheHeight(45f*2.25f + (accumulatedX), 79f*2.25f + (accumulatedZ) , 	0, 0f ,  theHeight), camera.position.z-3.5f );
          	//gameItems[0].setPosition(0f, 	terrain.getTheHeight((accumulatedX), (accumulatedZ) , containingX, containingZ ,  theHeight), camera.position.z-3.5f );
@@ -699,7 +702,7 @@ public class DummyGame implements IGameLogic {
          	}
          	
          	*/
-         	cameraInc.set(xMove, yMove, zMove);
+         	//cameraInc.set(xMove, yMove, zMove);
     		 
     		 
     		 
@@ -710,29 +713,36 @@ public class DummyGame implements IGameLogic {
     	 
     	 
         if (window.isKeyPressed(GLFW_KEY_W)) {
-        	//gZForAdvance -= .3;
-        	//camera.setPosition(0, 1, gZForAdvance);
         	
+        	 wCounter = wCounter + 1;
         	 gZ += .05;// * 144; 
         	
+        	 gameItems[0].setScale(.25f);
         	 
-        	 //7.6
-        	  gameItems[0].setScale(.25f);
-        	  //(-1 -.05f) - 7.6f/2 + .25f
         	  
         	  //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f,    (-1 -.05f));// - 7.6f/2 + .25f );
         	  //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, -1 -gZ - (+ 7.6f/2f ) );
         
+        	  /////
+        	  //where we are in the "real" world for height map
+        	  xBallDirectionFinal = xBallDirectionFinal +  xBallDistance * wCounter;
+        	  zBallDirectionFinal =  zBallDirectionFinal + zBallDistance * wCounter;
+        	  /////
+        	  System.out.println(xBallDirectionFinal);
+        	  System.out.println(zBallDirectionFinal);
+        	  System.out.println("");
+        	  
+        	  
         	  gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, -1 -2.5f-gZ );// - (+ 7.6f/2f ) );
               
         	  
-        	  Vector3f test = terrainObj[0].getRotation();
-          	float aa = test.x;
-          	
         	 
+           	camera.setPosition(0, 1,-1 - gZ);
         	
-        	camera.setPosition(0, 1,-1 - gZ);
-        	// 144 x .05 = 72;
+           	
+           	
+           	
+           
         	float radius = -1f ;
         	
         	
@@ -744,6 +754,8 @@ public class DummyGame implements IGameLogic {
 			}
         	
         	
+        	/////////////
+        	
         	float theta = camera.getRotation().y;//)m_rotationY;
         	
         	float phi = camera.getRotation().x;
@@ -753,22 +765,23 @@ public class DummyGame implements IGameLogic {
         	float yMove = radius*Math.sin(phi)*Math.sin(theta);
         	float zMove = radius*Math.cos(phi);
 
-        	//gameItems[4].setPosition();
-        	int a = 0;
+        	
+        	/////////////
         	
         	
         	
-        	Z++;
+        	
+        	//Z++;
         	//on scaled terrain
-        	accumulatedX = accumulatedX  + xMove / 20f ;
-        	accumulatedZ = accumulatedZ  + zMove / 20f ;	
+        	//accumulatedX = accumulatedX  + xMove / 20f ;
+        	//accumulatedZ = accumulatedZ  + zMove / 20f ;	
         		
-        	System.out.println(xMove);
-        	System.out.println(zMove);
-        	System.out.println(Z +" .05's");
-        	System.out.println("");
-        	worldX = worldX + xMove ;
-        	worldZ = worldZ + zMove;
+        	//System.out.println(xMove);
+        	//System.out.println(zMove);
+        	//System.out.println(Z +" .05's");
+        	//System.out.println("");
+        	//worldX = worldX + xMove ;
+        	//worldZ = worldZ + zMove;
         	
         		/*
         		if (accumulatedX > 3.95 * 3)
@@ -888,36 +901,74 @@ public class DummyGame implements IGameLogic {
         	//angleOfRotation = angleOfRotation - 90;
         	
             
-         if (window.isKeyPressed(GLFW_KEY_S)) {
-            //cameraInc.z =+ 1;
-            gZ += .3;
-	    	 //camera.setPosition(0, 0, -5);
-             //angleOfRotation = gZ;
-	    	 camera.setRotation(0, gZ, 0);
-	    	 
+         if (window.isKeyPressed(GLFW_KEY_A)) {
+        	//degrees
+         	gY1 -= 1.5;
+ 	    	 
+            if(gY1 <= -90)
+            {
+            	gY1 = gY1 + 2.5f;
+            	return(1);
+            }
+            	
+         	
+         	/////interesting revolve effect
+         	
+         	//ballsZ = Math.cos(radAngle);
+         	//ballsX = Math.sin(radAngle);
+            //gameItems[0].setPosition(ballsX , 1f *  -.8f - .5f + .13f ,  -3.6f + ballsZ);
+            //angleForBall = angleForBall + zRadians;
+         	
+         	//////
+         	
+         	//changed to radians in transformation class
+         	terrainObj[0].setRotation(0,gY1,0  );
+         	
+         	
+         	//direction determined by hypotenuse is one
+         	xBallDistance = terrain.findXValue(gY1);
+         	
+         	//direction was really .05
+         	//xBallDistance = xBallDistance  *.05f;
+         	zBallDistance = terrain.findYValue(gY1);
+         	//zBallDistance = zBallDistance  *.05f;
+         	
+         	
+         	System.out.println(gY1);
+         	System.out.println(xBallDistance);
+         	System.out.println(zBallDistance);
+         	System.out.println("");
 	    	 
         }
-        if (window.isKeyPressed(GLFW_KEY_A)) {
-        	
-        	
+        if (window.isKeyPressed(GLFW_KEY_S)) {
         	
         	          
-            
-        	gZ1 -= 2.5;
+            //degrees
+        	gY1 += 1.5;
+        	if(gY1 > 180)
+        	{   gY1 = gY1 - 2.5f;
+        		return(0);
+        	}
 	    	 
+        	float zRadians = Math.toRadians(gY1);
         	
-        	//angleOfBall = angleOfBall + 1;
-        	//float radAngle = (float) Math.toRadians(angleOfBall);
+        	terrainObj[0].setRotation(0,gY1,0  );
         	
-        	//ballsZ = Math.cos(radAngle);
-        	//ballsX = Math.sin(radAngle);
         	
-        	//gameItems[0].setPosition(ballsX , 1f *  -.8f - .5f + .13f ,  -3.6f + ballsZ);
+        	//direction determined by hypotenuse is one
+        	xBallDistance  = terrain.findXValue(gY1);
         	
-        	terrainObj[0].setRotation(0,gZ1,0  );
+        	//
+        	//direction was really .05
+        	//xBallDistance  = xBallDistance  *.05f;
+        	zBallDistance  = terrain.findYValue(gY1);
+        	//zBallDistance  = zBallDistance  *.05f;
         	
-        	Vector3f test = terrainObj[0].getRotation();
-        	float a = test.x;
+        	System.out.println(gY1);
+        	System.out.println(xBallDistance);
+         	System.out.println(zBallDistance);
+         	System.out.println("");
+	    	 
         	
    	 
             
@@ -1000,6 +1051,8 @@ public class DummyGame implements IGameLogic {
     
     
     }
+    
+    return(1);
     	
     }
     private double sin(float yrotrad) {
