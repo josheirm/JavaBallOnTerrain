@@ -36,6 +36,10 @@ public class DummyGame implements IGameLogic {
 	//glMatrixMode(GL_MODELVIEW);
 	
 	//static final
+	
+	//for setposition
+	float height = .9f;
+	float gBallPositionX= 0;
 	private  float SIZE = 180f;
 	private  int VERTEX_COUNT = 80;
 	
@@ -231,18 +235,9 @@ public class DummyGame implements IGameLogic {
         GameItem gameItem1 = new GameItem(mesh);
         
         	
-        	 // -20/20  -.5 = -1.5
-        	 //
-     	//gameItem1.setPosition(0, -1f + .5f , -3.5f);
-        
-        //the hundreths place does not affect any change of ball on terrain
-        //gameItem1.setScale(.5f);
-        //put a value here as half the real value 
-        //gameItem1.setPosition(0f, -2.f + .25f + .25f, -3.5f);
         float y = 0;
         
        
-        
         
         
         ///////////height : 20 * .5 = 10
@@ -259,21 +254,10 @@ public class DummyGame implements IGameLogic {
         
         
         
-        //gameItem1.setPosition(0f, 1f *  -.8f - .5f + .13f  , -3.6f - .50f);      
-             
-        //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, -1  );
-        //gameItem1.setPosition(0f, 1f *  -.8f - .5f + .13f , -1f + .05f); 
-        //gameItems[0].setScale(.25f);
-  	  
-  	
-        
-        
         //////////height10 * .5 = 5
         
         //0
         //gameItem1.setPosition(0, (-.5f +.125f)/2 , -3.5f );
-        
-        
         //-1
         //gameItem1.setPosition(0, (-1.5f +.250f)/2 , -3.5f );
         
@@ -282,48 +266,14 @@ public class DummyGame implements IGameLogic {
         
         ////////height16 *.5 = 8w
         //-1
-       //? 
-       // gameItem1.setPosition(0f, (-1.5f +.125f)/(10f/8f), -10.8f);//3.5f  );
+        // gameItem1.setPosition(0f, (-1.5f +.125f)/(10f/8f), -10.8f);//3.5f  );
        
        
-        
-        
-        //gameItem1.setPosition(0f, .4f, -3.5f );
-        
         
         
         gameItem1.setScale(0.25f);
-//        gameItem1.setPosition(0.5f, 0.5f, -5);
-//        GameItem gameItem2 = new GameItem(mesh);
-//        gameItem2.setScale(0.5f);
-//        gameItem2.setPwosition(0.5f, 0.5f, -5);
-//       
-//        //glPushMatrix();
-//        ww
-//        GameItem gameItem3 = new GameItem(mesh);
-//        gameItem3.setScale(0.5f);
-//        gameItem3.setPosition(0, 0, -5);
-//        GameItem gameItem4 = new GameItem(mesh);
-//        gameItem4.setScale(0.5f);
-//        gameItem4.setPosition(0.5f, 0, -5);
-//        
-//        GameItem gameItem5 = new GameItem(mesh);
-//        gameItem5.setScale(0.5f);
-//        gameItem5.setPosition(0, 0, -10);
-//      
-        //ball
-       
-        //ball is 1 unit, so flat area is at :  -.7f  
         
-        //0 + 1    :  1 x X = 1.60
-       
-        //camera position = 0,1,0
         
-       //3.5f/7.2f*80f;
-        
-        //gameItem1.setPosition(0f, terrain.getTheHeight(400f, 400 , 0, 0f ,  theHeight), camera.position.z-3.5f );
-        
-        //gameItem1.setPosition(0f, 	.5f*terrain.getTheHeight(40f*2.25f, 80f*2.25f - (accumulatedZ) , 	0, 0f ,  theHeight), camera.position.z-3.5f );
         
         
         GameItem gameItem2 = new GameItem(mesh);
@@ -460,8 +410,9 @@ public class DummyGame implements IGameLogic {
 		for(int i=-40;i<(VERTEX_COUNT/2);i++){
 			for(int j=-40;j<(VERTEX_COUNT/2);j++){
 				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
-				//base is at : 2.9019595   //  -40
-				float height =.5f;//* terrain.getHeight(j, i, image);
+				
+				//4.8f
+				height = .9f;//* terrain.getHeight(j, i, image);
 				vertices[vertexPointer*3+1] =  height;
 				//theHeight[j][i] = height;
 				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
@@ -646,15 +597,36 @@ public class DummyGame implements IGameLogic {
 	    
     	 
     	 }
+    	 
+    	 if (window.isKeyPressed(GLFW_KEY_E)) {
+    		 float radius = 1f;
+    		 
+    		 
+    		 
+         	
+    		
+    		 gZ -= .05;// * 144; 
+    		 //.9
+    		 gameItems[0].setPosition(0f,.43f/.5f*.8f * 2/height / 10 + .1f, -1 -2.5f+gZ );// - (+ 7.6f/2f ) );
+             
+        	 
+        	 
+       	  //gameItems[0].setScale(.25f);
+       	  
+       	  
+    	 }
+    	 
+    	 
     	 if (window.isKeyPressed(GLFW_KEY_X)) {
     		 float radius = 1f;
     		 
     		 
     		 
          	
-         	
+    		
     		 gZ += .05;// * 144; 
-    		 gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, -1 -2.5f+gZ );// - (+ 7.6f/2f ) );
+    		 //.9
+    		 gameItems[0].setPosition(0f,.43f/.5f*.8f * 2/height / 10 + .1f, -1 -2.5f+gZ );// - (+ 7.6f/2f ) );
              
         	 
         	 
@@ -712,17 +684,57 @@ public class DummyGame implements IGameLogic {
         	 }
     	 
     	 
+    	 //strafe right
+    	 if (window.isKeyPressed(GLFW_KEY_T)) {
+          	
+    		 
+    		 //gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2/.4f / 10 + .1f,      -3.5f-gZ ); 
+    		 
+    		 //for set positiion
+    		 gBallPositionX = gBallPositionX + .05f;
+    		 xBallDirectionFinal =  xBallDirectionFinal + .05f;
+    		 
+    		 camera.setPosition(.05f, 1,-1 - gZ);
+    		 //cameraInc.set(.05, 0, 0);
+    		//.4  OK OK
+    		//.9f at make terrain
+          	gameItems[0].setPosition(gBallPositionX,      .43f/.5f*.8f * 2/height / 10 + .1f,      -3.5f-gZ ); 
+    		 
+    	 }
+    	 
+    	 //strafe left
+    	 if (window.isKeyPressed(GLFW_KEY_R)) {
+         	//for set position
+    		 gBallPositionX = gBallPositionX - .05f;
+    		 //for height map of terrain
+    		 xBallDirectionFinal =  xBallDirectionFinal - .05f;
+    		 
+    		 camera.setPosition(-.05f, 1,-1 - gZ);
+    		 //cameraInc.set(-.05, 0, 0);
+    		//.4  OK OK
+          	gameItems[0].setPosition(gBallPositionX,    .43f/.5f*.8f * 2/height / 10 + .1f,      -3.5f-gZ ); 
+    		 
+    	 }
+    	 
+    	 
+    	 
+    	 
+    	 
         if (window.isKeyPressed(GLFW_KEY_W)) {
         	
         	 wCounter = wCounter + 1;
-        	 gZ += .05;// * 144; 
+        	 gZ += .05f;// * 144; 
         	
         	 gameItems[0].setScale(.25f);
+        	 
+        	 gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2/.9f / 10 + .1f,      -3.5f-gZ ); 
         	 
         	  
         	  //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f,    (-1 -.05f));// - 7.6f/2 + .25f );
         	  //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, -1 -gZ - (+ 7.6f/2f ) );
         
+        	 
+        	 
         	  /////
         	  //where we are in the "real" world for height map
         	  xBallDirectionFinal = xBallDirectionFinal +  xBallDistance * wCounter;
@@ -733,7 +745,29 @@ public class DummyGame implements IGameLogic {
         	  System.out.println("");
         	  
         	  
-        	  gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, -1 -2.5f-gZ );// - (+ 7.6f/2f ) );
+        	  
+        	  //1.6 - > .8   :   camera.setPosition(0, 1,-1 - gZ);
+        	  
+              //0,	0.329,	-3.55
+             
+        	 
+        	  
+        	  //.4  OK OK
+        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2/.4f / 10 + .1f,      -3.5f-gZ ); 
+        	  //2 OK OK
+        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2f * 2f / 10+ .1f,      -3.5f-gZ ); 
+        	  //2.6 OK OK
+        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f *2 *2 / .6f / 10 + .1f,      -3.5f-gZ ); 
+        	  //1 OK OK
+        	  //gameItems[0].setPosition(0f,     0.43f/0.5f*0.8f *2.0f * 1.0f / 10.0f + .1f,      -3.5f-gZ ); 
+        	  //.9 OK OK
+        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f *2 /.9f / 10 + .1f,      -3.5f-gZ ); 
+        	  //-1.9 OK OK
+        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f *2 * 1 /.9f / 10 + .1f,      -3.5f-gZ );
+        	  //0 OK OK
+        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f *2 *0f / 10 + .1f,      -3.5f-gZ );
+        	Vector3f vec = new Vector3f();
+            vec = gameItems[0].getPosition();
               
         	  
         	 
