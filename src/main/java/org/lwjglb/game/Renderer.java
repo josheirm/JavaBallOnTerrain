@@ -95,7 +95,7 @@ public class Renderer {
         //for (GameItem gameItem : gameItems)
         {
             
-        	
+        	/*
             
          // Set model view matrix for this item
         	Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItems[1], viewMatrix);
@@ -123,24 +123,24 @@ public class Renderer {
             //// Render the mes for this game item
             //gameItems[4].getMesh().render();
             
-            
+            */
             for (int i = 0; i< 1 ;i++)
             {
-            modelViewMatrix = transformation.getModelViewMatrix(terrainItems[i], viewMatrix);
+            Matrix4f modelViewMatrix = transformation.getModelViewMatrix(terrainItems[i], viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mes for this game item
             terrainItems[i].getMesh().render();
-            
+          
             
            
             
             }
-            
+            /* 
             vx1 = viewMatrix.m20();
             vy1 = viewMatrix.m21();
             vz1 = viewMatrix.m22();
             
-            
+            */
             
             //modelViewMatrix = transformation.getModelViewMatrix(terrainItems[1], viewMatrix);
             //shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
@@ -148,7 +148,7 @@ public class Renderer {
             //terrainItems[1].getMesh().render();
          // ball
         	// Set model view matrix for this item
-             modelViewMatrix = transformation.getModelViewMatrix(gameItems[0], viewMatrix);
+        	Matrix4f modelViewMatrix = transformation.getModelViewMatrix(gameItems[0], viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             // Render the mes for this game item
             gameItems[0].getMesh().render();

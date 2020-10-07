@@ -2,6 +2,10 @@
 
 package org.lwjglb.game;
 
+
+
+
+
 import  org.lwjgl.opengl.GL11;
 import java.lang.*;
 
@@ -31,6 +35,10 @@ import  org.joml.Math;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+
+
+
+
 public class DummyGame implements IGameLogic {
 
 	//glMatrixMode(GL_MODELVIEW);
@@ -38,10 +46,25 @@ public class DummyGame implements IGameLogic {
 	//static final
 	
 	//for setposition
+	
+	
+	// M
+	float changeM = 0;
+	float flag2 = 0;
+	float answer2 = 0;
+	
+	float tempHeight = 0;
+	int heightIndexX = 0;
+	int heightIndexZ = 0;
 	float height = .9f;
 	float gBallPositionX= 0;
+	
+	
+	
 	private  float SIZE = 180f;
-	private  int VERTEX_COUNT = 80;
+	private  int VERTEX_COUNT = 91;
+	
+	
 	
 	float wCounter = 0;
 	float xBallDirectionFinal = 0;
@@ -54,7 +77,7 @@ public class DummyGame implements IGameLogic {
 	//private  float SIZE = 800f;
 	//private  int VERTEX_COUNT = 10;
 	
-	float[][] theHeight = new float[VERTEX_COUNT+80][VERTEX_COUNT+80];
+	float[][] theHeight = new float[VERTEX_COUNT+180][VERTEX_COUNT+180];
 	
 	
 	int Z = 0;
@@ -74,6 +97,9 @@ public class DummyGame implements IGameLogic {
 	float containingX = 0f;
 	float containingZ = 0f; 
 	
+	
+	//?
+    float gY = 0f;
 	float gY1 = 0;
 	float gZ = 0;
 	float gZForAdvance = 0;
@@ -128,6 +154,11 @@ public class DummyGame implements IGameLogic {
         //gameItem5
         
         
+    /////////
+    
+    
+    //////////
+    
         float ga = 0.0f;
         ga = 77f * .08f;
         
@@ -271,7 +302,7 @@ public class DummyGame implements IGameLogic {
        
         
         
-        gameItem1.setScale(0.25f);
+        gameItem1.setScale(0.20f);
         
         
         
@@ -294,7 +325,7 @@ public class DummyGame implements IGameLogic {
         BufferedImage image = null;
         
         try {
-        	image = ImageIO.read(new File("textures/" + "heightMap1" + ".bmp"));
+        	image = ImageIO.read(new File("textures/" + "heightmap" + ".png"));
             }
         catch (IOException e) {
         
@@ -411,10 +442,25 @@ public class DummyGame implements IGameLogic {
 			for(int j=-40;j<(VERTEX_COUNT/2);j++){
 				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
 				
-				//4.8f
-				height = .9f;//* terrain.getHeight(j, i, image);
-				vertices[vertexPointer*3+1] =  height;
-				//theHeight[j][i] = height;
+				
+				tempHeight = terrain.getHeight(j+40, i+40, image);
+				
+				
+				//tempHeight = tempHeight / 10;
+				if (tempHeight > 10)
+				{
+					int test = 0;
+				}
+				// 1 - (-1)
+				//;tempHeight = tempHeight / 40f;
+				//height = .2f;
+				
+				
+				tempHeight = .1f  ;
+			
+				
+				vertices[vertexPointer*3+1] =  tempHeight;
+				theHeight[j + 40][i + 40] = tempHeight;
 				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
 				
 					
@@ -561,9 +607,17 @@ public class DummyGame implements IGameLogic {
         
         gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f,    (-1 -.05f));
         //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, (-1 -.05f) - 7.6f/2 + .25f );
-        camera.setPosition(0, 1,1 - gZ);
+        
+         camera.setPosition(0, 1f,1 - gZ);
+        //camera.setPosition(0, .8f,.18f - gZ);
+         //tempHeight = 3; 
         
     }
+    
+    
+    
+    
+    
 
     //@Override
     public int input(Window window, MouseInput mouseInput)  {
@@ -572,20 +626,146 @@ public class DummyGame implements IGameLogic {
     	//camera.setPosition(0, 1, 10);
     	cameraInc.set(0, -0, 0);
     	
+    	//deeper
     	
+    	if (window.isKeyPressed(GLFW_KEY_Z)) {
+    		 System.out.println("---Z pressed--- .2f");
+    		 
+    		
+    		 flag2 = 0;
+    		float answer = terrain.getTheHeight(40*2, 40*2, 0 , 0 , theHeight); 
+    		
+    		//answer = answer * .14f + .125f * .25f;
+    		//answer = answer * .14f + .125f * .25f;
+    		
+    		gameItems[0].setPosition(0,    -.75f ,     -3.6f-gZ ); 
+    		camera.setPosition(0,1,-1 - gZ);
+    		
+    		 System.out.println("--beg Z pressed--answer, Z--");
+       		 //System.out.println(tempHeight);
+       		 //System.out.println(-3.6f-gZ);
+        	 //System.out.println(theHeight[0][(int) gZ]); 
+        	 System.out.println(answer);
+       		 System.out.println("--end----");
+    		
+    		
+    	}
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	//NO
+    	if (window.isKeyPressed(GLFW_KEY_M)) {
+    		
+    		//tempHeight = tempHeight - .1f;
+    		
+    		changeM = changeM - .1f;
+    		gameItems[0].setPosition(0.f     ,-.12f +changeM ,     -3.6f-gZ ); 
+    		
+    		
+    		//if (flag2 == 0)
+    	//	{
+    	//		float answer = terrain.getTheHeight(35*2, 35*2, 0 , 0 , theHeight); 
+        //		
+    	//	//answer2 = theHeight[35*2][35*2]; 
+    	//	answer2 = answer2 * .14f + .125f;
+    	//	flag2 = 1;
+    	//	}
+    		
+    		
+    	//	answer2 = answer2 - .1f;
+    		
+   	//	 gameItems[0].setPosition(-5f,     answer2,     -3.6f-gZ ); 
+   		 
+   		 System.out.println("--beg M pressed--answer--");
+   		 System.out.println(-.12f +changeM);
+   		 System.out.println("--end----");
+   		 try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    	}
+    	
+    	
+    	//no
+    	if (window.isKeyPressed(GLFW_KEY_C)) {
+    		
+    		 tempHeight = tempHeight - .01f;
+    		 gameItems[0].setPosition(0f,     tempHeight,     -3.6f-gZ ); 
+    		 
+    		 System.out.println("--beg C pressed--temp height--");
+    		 System.out.println(tempHeight);
+    		 System.out.println("--end----");
+    		 try {
+ 				Thread.sleep(500);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+         	
+    		
+    	}
+    	//.197
     	if (window.isKeyPressed(GLFW_KEY_V)) {
     		
-    		gRot += .1;
-    		cameraInc.set(-5, 0 + gRot, -10);
-    		gameItems[4].getPosition();//0, -10, 0);
-    		terrainItems[4].getPosition();//0, -10, 0);
-    			   		
-    		}
+    		tempHeight = tempHeight - .001f;
+   		 gameItems[0].setPosition(0f,     tempHeight,     -3.6f-gZ ); 
+   		 
+   		 System.out.println("--beg X pressed--temp height--");
+   		 System.out.println(tempHeight);
+   		 System.out.println("--end----");
+   		 try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    		
+    	}
     	
     	if (window.isKeyPressed(GLFW_KEY_B)) {
-    		gRot -= .1;
-    		cameraInc.set(-5, -5 - gRot, 0);
-    	}
+    		
+    		tempHeight = tempHeight - .001f;
+      		 gameItems[0].setPosition(0f,     tempHeight,     -3.6f-gZ ); 
+      		 
+      		 System.out.println("--beg X pressed--temp height--");
+      		 System.out.println(tempHeight);
+      		 System.out.println("--end----");
+      		 try {
+   				Thread.sleep(500);
+   			} catch (InterruptedException e) {
+   				// TODO Auto-generated catch block
+   				e.printStackTrace();
+   			}
+       		
+       	}
+    		
+    		
+    	
+    	//if (window.isKeyPressed(GLFW_KEY_V)) {
+    	//	
+    	//	gRot += .1;
+    	//	cameraInc.set(-5, 0 + gRot, -10);
+    	//	gameItems[4].getPosition();//0, -10, 0);
+    	//	terrainItems[4].getPosition();//0, -10, 0);
+    	//		   		
+    	//	}
+    	
+    	
+    	
+    	
+    	
+    	//
+    	//if (window.isKeyPressed(GLFW_KEY_B)) {
+    	//	gRot -= .1;
+    	//	cameraInc.set(-5, -5 - gRot, 0);
+    	//}
     	
     	 if (window.isKeyPressed(GLFW_KEY_U)) {
 	    	 gZ += .3;
@@ -624,14 +804,24 @@ public class DummyGame implements IGameLogic {
     		 
          	
     		
-    		 gZ += .05;// * 144; 
+    		 gZ -= .05;// * 144; 
     		 //.9
-    		 gameItems[0].setPosition(0f,.43f/.5f*.8f * 2/height / 10 + .1f, -1 -2.5f+gZ );// - (+ 7.6f/2f ) );
-             
+    		 //gameItems[0].setPosition(0f,.43f/.5f*.8f * 2/height / 10 + .1f, -1 -2.5f+gZ );// - (+ 7.6f/2f ) );
+    		 gameItems[0].setPosition(0f,     tempHeight - .1f ,     -3.6f-gZ ); 
         	 
         	 
        	  gameItems[0].setScale(.25f);
          	
+       	try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       	
+       	
+    	camera.setPosition(0, 1,-1 - gZ);
+       	
          	//gameItems[0].setPosition(0f, 	terrain.getTheHeight(45f*2.25f + (accumulatedX), 79f*2.25f + (accumulatedZ) , 	0, 0f ,  theHeight), camera.position.z-3.5f );
          	//gameItems[0].setPosition(0f, 	terrain.getTheHeight((accumulatedX), (accumulatedZ) , containingX, containingZ ,  theHeight), camera.position.z-3.5f );
             
@@ -687,18 +877,18 @@ public class DummyGame implements IGameLogic {
     	 //strafe right
     	 if (window.isKeyPressed(GLFW_KEY_T)) {
           	
-    		 
+    		 cameraInc.x = 1;
     		 //gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2/.4f / 10 + .1f,      -3.5f-gZ ); 
     		 
     		 //for set positiion
-    		 gBallPositionX = gBallPositionX + .05f;
-    		 xBallDirectionFinal =  xBallDirectionFinal + .05f;
+    		 //gBallPositionX = gBallPositionX + .05f;
+    		 //xBallDirectionFinal =  xBallDirectionFinal + .05f;
     		 
-    		 camera.setPosition(.05f, 1,-1 - gZ);
+    		 camera.setPosition(0f, .9f, -2f);
     		 //cameraInc.set(.05, 0, 0);
     		//.4  OK OK
     		//.9f at make terrain
-          	gameItems[0].setPosition(gBallPositionX,      .43f/.5f*.8f * 2/height / 10 + .1f,      -3.5f-gZ ); 
+          	//gameItems[0].setPosition(gBallPositionX,      .43f/.5f*.8f * 2/height / 10 + .1f,      -3.5f-gZ ); 
     		 
     	 }
     	 
@@ -717,22 +907,40 @@ public class DummyGame implements IGameLogic {
     	 }
     	 
     	 
+    	 if (window.isKeyPressed(GLFW_KEY_Y)) {
+    		 
+    		 gZ += .05f;
+    		 gameItems[0].setPosition(0f,     answer2 ,     -3.6f-gZ ); 
+    		 camera.setPosition(0,1,-1 - gZ);
+    		 
+    	 }
     	 
-    	 
-    	 
+    	 //80 vertices, 180 size
         if (window.isKeyPressed(GLFW_KEY_W)) {
         	
+        	 flag2 = 0;
+        	 
         	 wCounter = wCounter + 1;
         	 gZ += .05f;// * 144; 
         	
+        	 
+        	 
+        	 
+        	 //these two work with set position below
+        	 float answ = theHeight[40][40];
+        	 float answer = terrain.getTheHeight(40f*2.278f, 40*2.278f	 	,0f,0f,theHeight);
+         	
+        	 //answer = ((answer * .14f) + (.125f));
+        	 //answer = tempHeight * .14f + .25f;
+        	 
         	 gameItems[0].setScale(.25f);
         	 
-        	 gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2/.9f / 10 + .1f,      -3.5f-gZ ); 
         	 
-        	  
-        	  //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f,    (-1 -.05f));// - 7.6f/2 + .25f );
-        	  //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, -1 -gZ - (+ 7.6f/2f ) );
-        
+     		
+        	 
+        	 
+        	 //gameItems[0].setPosition(0.f,     tempHeight * 0.05f + .25f ,    -3.6f-gZ );
+        	 gameItems[0].setPosition(0.f,     answer * 0.05f + .25f ,    -3.6f-gZ );
         	 
         	 
         	  /////
@@ -740,9 +948,15 @@ public class DummyGame implements IGameLogic {
         	  xBallDirectionFinal = xBallDirectionFinal +  xBallDistance * wCounter;
         	  zBallDirectionFinal =  zBallDirectionFinal + zBallDistance * wCounter;
         	  /////
-        	  System.out.println(xBallDirectionFinal);
-        	  System.out.println(zBallDirectionFinal);
-        	  System.out.println("");
+        	  
+        	  System.out.println("--w-pressed----answer");
+        	 // System.out.println(tempHeight);
+        	 // System.out.println(-3.6f-gZ);
+         	  System.out.println(answer); 
+         	  //answer = theHeight[0][(int) gZ] * .14f + .125f;
+        	  
+        	  //System.out.println(answer);
+        	  System.out.println("--end----");
         	  
         	  
         	  
@@ -781,7 +995,7 @@ public class DummyGame implements IGameLogic {
         	
         	
         	try {
-				Thread.sleep(500);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -949,7 +1163,7 @@ public class DummyGame implements IGameLogic {
          	/////interesting revolve effect
          	
          	//ballsZ = Math.cos(radAngle);
-         	//ballsX = Math.sin(radAngle);
+         	//ballsX = Math.sin(ryadAngle);
             //gameItems[0].setPosition(ballsX , 1f *  -.8f - .5f + .13f ,  -3.6f + ballsZ);
             //angleForBall = angleForBall + zRadians;
          	
@@ -1049,7 +1263,7 @@ public class DummyGame implements IGameLogic {
        	 
         }
         
-        else if (window.isKeyPressed(GLFW_KEY_M)) {
+        /*else if (window.isKeyPressed(GLFW_KEY_M)) {
         	//cameraInc.x = 1;
         	
         	 //camera.setRotationZ();
@@ -1077,7 +1291,7 @@ public class DummyGame implements IGameLogic {
        	
         	
         
-        }
+        }*/
    
     if (window.isKeyPressed(GLFW_KEY_H)) 
     {
