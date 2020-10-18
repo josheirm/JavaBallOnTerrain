@@ -49,6 +49,7 @@ public class DummyGame implements IGameLogic {
 	
 	
 	// M
+	float yReducer = 0;
 	float changeM = 0;
 	float flag2 = 0;
 	float answer2 = 0;
@@ -427,7 +428,7 @@ public class DummyGame implements IGameLogic {
 			}
 		}
 		*/
-        //////
+        //////////Make terrain
         VERTEX_COUNT = 80;
         SIZE = 180;
         int count = VERTEX_COUNT * VERTEX_COUNT;
@@ -444,33 +445,12 @@ public class DummyGame implements IGameLogic {
 				
 				
 				tempHeight = terrain.getHeight(j+40, i+40, image);
-				
-				
-				//tempHeight = tempHeight / 10;
-				if (tempHeight > 10)
-				{
-					int test = 0;
-				}
-				// 1 - (-1)
-				//;tempHeight = tempHeight / 40f;
-				//height = .2f;
-				
-				
-				tempHeight = .1f  ;
-			
-				
 				vertices[vertexPointer*3+1] =  tempHeight;
 				theHeight[j + 40][i + 40] = tempHeight;
 				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
-				
-					
-					
-					
-				
-				
-				normals[vertexPointer*3] = 0;
-				normals[vertexPointer*3+1] = 1;
-				normals[vertexPointer*3+2] = 0;
+				//normals[vertexPointer*3] = 0;
+				//normals[vertexPointer*3+1] = 1;
+				//normals[vertexPointer*3+2] = 0;
 				textureCoords[vertexPointer*2] = (float)j/((float)VERTEX_COUNT - 1);
 				textureCoords[vertexPointer*2+1] = (float)i/((float)VERTEX_COUNT - 1);
 				vertexPointer++;
@@ -490,13 +470,12 @@ public class DummyGame implements IGameLogic {
 				indices2[pointer++] = bottomLeft;
 				indices2[pointer++] = bottomRight;
 				
-				
-				
-				
 			}
 		}
     
-		 
+		//////////
+		
+		
 		
 		Texture texture2 = new Texture("textures/grass.png");
         // Mesh mesh = new Mesh(positions, textCoords, indices, texture);
@@ -633,20 +612,57 @@ public class DummyGame implements IGameLogic {
     		 
     		
     		 flag2 = 0;
-    		float answer = terrain.getTheHeight(40*2, 40*2, 0 , 0 , theHeight); 
+    		//float answer = terrain.getTheHeight(40*2, 40*2, 0 , 0 , theHeight); 
     		
+    		 float zTerrain = (3.6f + gZ) * 25f;
+        	 
+        	 int gridZ = (int) Math.floor(zTerrain/2.278f);
+        	 
+        	 
+        	 //these two work with set position below
+        	 float answ = theHeight[40][gridZ];
+        	 //float answer = terrain.getTheHeight(40f*2.278f, 40*2.278f	 	,0f,0f,theHeight);
+        	 //float answer = terrain.getTheHeight(90f*2.278f, zTerrain	 	,0f,0f,theHeight);
+        	 float answer = terrain.getTheHeight(79f * .5f * 2.278f, zTerrain 	,0f,0f,theHeight);
+           	
+    		 
+        	 gameItems[0].setScale(.125f);
+        	 
+        	 
+     		
+        	 
+        	 
+        	 //gameItems[0].setPosition(0.f,     tempHeight * 0.05f + .25f ,    -3.6f-gZ );
+        	 gameItems[0].setPosition(0f,     answer * 0.04f + .0625f + yReducer ,    -3.6f-gZ  );
+        	 yReducer = yReducer - .01f;
+        	 
+        	 
+        	 
+        	 
+    		 
     		//answer = answer * .14f + .125f * .25f;
     		//answer = answer * .14f + .125f * .25f;
     		
-    		gameItems[0].setPosition(0,    -.75f ,     -3.6f-gZ ); 
-    		camera.setPosition(0,1,-1 - gZ);
+    		//gameItems[0].setPosition(0,    -.75f ,     -3.6f-gZ ); 
+    		//camera.setPosition(0,1,-1 - gZ);
+    		
+        	 camera.setPosition(0, 1,-2.2f - gZ );
+        	 //camera.setPosition(0,1,-2.2f);
     		
     		 System.out.println("--beg Z pressed--answer, Z--");
-       		 //System.out.println(tempHeight);
-       		 //System.out.println(-3.6f-gZ);
+       		 System.out.println(zTerrain);
+       		 System.out.println(answer);
         	 //System.out.println(theHeight[0][(int) gZ]); 
-        	 System.out.println(answer);
+        	 System.out.println(yReducer);
        		 System.out.println("--end----");
+       		 
+       		try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        	
     		
     		
     	}
@@ -915,87 +931,39 @@ public class DummyGame implements IGameLogic {
     		 
     	 }
     	 
-    	 //80 vertices, 180 size
+    	 
+    	//////////////////// 
+    	//height map is 80 * 80 vertices, 180 size
+    	//move in negative z direction
         if (window.isKeyPressed(GLFW_KEY_W)) {
         	
-        	 flag2 = 0;
-        	 
-        	 wCounter = wCounter + 1;
-        	 gZ += .05f;// * 144; 
+        	 //change in z
+        	 gZ += .05f;
         	
+        	 // size of height map * scale of display is size of terrain to draw :  180 * .04  = 7.2
+           	 // terrain size is 7.2 so 3.6 is in center and height map terrain is 25 times bigger 
+        	 // because scale of display is .04
+        	 float zTerrain = (3.6f + gZ) * 25f;
         	 
-        	 
-        	 
-        	 //these two work with set position below
-        	 float answ = theHeight[40][40];
-        	 float answer = terrain.getTheHeight(40f*2.278f, 40*2.278f	 	,0f,0f,theHeight);
-         	
-        	 //answer = ((answer * .14f) + (.125f));
-        	 //answer = tempHeight * .14f + .25f;
-        	 
-        	 gameItems[0].setScale(.25f);
-        	 
-        	 
-     		
-        	 
-        	 
-        	 //gameItems[0].setPosition(0.f,     tempHeight * 0.05f + .25f ,    -3.6f-gZ );
-        	 gameItems[0].setPosition(0.f,     answer * 0.05f + .25f ,    -3.6f-gZ );
-        	 
-        	 
-        	  /////
-        	  //where we are in the "real" world for height map
-        	  xBallDirectionFinal = xBallDirectionFinal +  xBallDistance * wCounter;
-        	  zBallDirectionFinal =  zBallDirectionFinal + zBallDistance * wCounter;
-        	  /////
-        	  
-        	  System.out.println("--w-pressed----answer");
-        	 // System.out.println(tempHeight);
-        	 // System.out.println(-3.6f-gZ);
-         	  System.out.println(answer); 
-         	  //answer = theHeight[0][(int) gZ] * .14f + .125f;
-        	  
-        	  //System.out.println(answer);
-        	  System.out.println("--end----");
-        	  
-        	  
-        	  
-        	  //1.6 - > .8   :   camera.setPosition(0, 1,-1 - gZ);
-        	  
-              //0,	0.329,	-3.55
-             
-        	 
-        	  
-        	  //.4  OK OK
-        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2/.4f / 10 + .1f,      -3.5f-gZ ); 
-        	  //2 OK OK
-        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2f * 2f / 10+ .1f,      -3.5f-gZ ); 
-        	  //2.6 OK OK
-        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f *2 *2 / .6f / 10 + .1f,      -3.5f-gZ ); 
-        	  //1 OK OK
-        	  //gameItems[0].setPosition(0f,     0.43f/0.5f*0.8f *2.0f * 1.0f / 10.0f + .1f,      -3.5f-gZ ); 
-        	  //.9 OK OK
-        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f *2 /.9f / 10 + .1f,      -3.5f-gZ ); 
-        	  //-1.9 OK OK
-        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f *2 * 1 /.9f / 10 + .1f,      -3.5f-gZ );
-        	  //0 OK OK
-        	  //gameItems[0].setPosition(0f,     .43f/.5f*.8f *2 *0f / 10 + .1f,      -3.5f-gZ );
-        	Vector3f vec = new Vector3f();
-            vec = gameItems[0].getPosition();
-              
-        	  
-        	 
-           	camera.setPosition(0, 1,-1 - gZ);
+        	 //height map cell is size of height map divided by (vectors - 1)   :   2.278
+        	 //first parameter is x, centered so, half of 79 cells times 2.278
+        	 float answer = terrain.getTheHeight(79f * .5f * 2.278f, zTerrain 	,0f,0f,theHeight);
+          	 gameItems[0].setScale(.125f);
+        	 //scale of displayed terrain Y is .04 times height map's Y and image is centered on 
+          	 //displayed terrain
+        	 gameItems[0].setPosition(0.f,  .04f * answer  + 0.0625f,  -3.6f-gZ );
+             camera.setPosition(0, 1,-gZ);
         	
+        ////////////////////
            	
-           	
+          	
            	
            
         	float radius = -1f ;
         	
         	
         	try {
-				Thread.sleep(200);
+				Thread.sleep(0);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
