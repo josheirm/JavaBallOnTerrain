@@ -5,7 +5,8 @@ import java.awt.image.BufferedImage;
 import org.joml.Vector3f;
 import org.joml.Vector2f;
 import  org.joml.Math;
-
+import java.awt.Point;
+import java.awt.geom.Point2D;
 
 public class Terrain {
 
@@ -31,7 +32,7 @@ public class Terrain {
 	public float getHeight(int x, int z, BufferedImage image)
 	{
 		//image is 256 x 256, 32 bit png
-		float height = image.getRGB(x, z);
+		float height = image.getRGB(x+6, z+6);
 		
 		//MAX_PIXEL_COLOUR = 256 * 256 * 256
 		//MAX_HEIGHT = 40
@@ -40,6 +41,7 @@ public class Terrain {
 		height *= MAX_HEIGHT;
 		
 		return height;
+		//return(0);
 		}
 	
 	public static float barryCentric(Vector3f p1, Vector3f p2, Vector3f p3, Vector2f pos) {
@@ -51,6 +53,10 @@ public class Terrain {
 	}
 
 
+	
+	
+	
+	
 	public float getTheHeight(float worldX, float worldZ, float xOfGrid, float zOfGrid , float [][]theHeights)
 	{
 		float answer = 0;
@@ -59,7 +65,7 @@ public class Terrain {
 		float terrainZ = worldZ - zOfGrid;
 		//gridsquaresize = grid size / vertex - 1
 		//180 / 79 = 2.278f
-		float gridSquareSize = 2.278f;  
+		float gridSquareSize = 1f;  
 		int gridX = (int) Math.floor(terrainX/gridSquareSize);
 		int gridZ = (int) Math.floor(terrainZ/gridSquareSize);
 		
@@ -68,6 +74,11 @@ public class Terrain {
 		
 		if (xCoord <= (1-zCoord))
 		{
+			
+			//theHeights[gridX ][gridZ] = 0;
+			//theHeights[gridX + 1][gridZ]= 0;
+			//theHeights[gridX][gridZ+1];
+			
 			answer = barryCentric(new Vector3f(0, theHeights[gridX][gridZ], 0), new Vector3f(1,
 					theHeights[gridX + 1][gridZ], 0), new Vector3f(0,
 					theHeights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
