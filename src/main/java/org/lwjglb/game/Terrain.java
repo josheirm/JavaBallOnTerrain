@@ -32,7 +32,7 @@ public class Terrain {
 	public float getHeight(int x, int z, BufferedImage image)
 	{
 		//image is 256 x 256, 32 bit png
-		float height = image.getRGB(x+6, z+6);
+		float height = image.getRGB(x, z);
 		
 		//MAX_PIXEL_COLOUR = 256 * 256 * 256
 		//MAX_HEIGHT = 40
@@ -40,6 +40,16 @@ public class Terrain {
 		height /= MAX_PIXEL_COLOUR/2f;
 		height *= MAX_HEIGHT;
 		
+		
+		//if(height > .5)
+		//{
+		//	height = .5F;
+		//}
+		//else if (height < -20)
+		//{
+		//	height = -20;
+		//}
+		//height = height / 2f;
 		return height;
 		//return(0);
 		}
@@ -65,10 +75,17 @@ public class Terrain {
 		float terrainZ = worldZ - zOfGrid;
 		//gridsquaresize = grid size / vertex - 1
 		//180 / 79 = 2.278f
-		float gridSquareSize = 1f;  
+		float gridSquareSize = .6f;  
 		int gridX = (int) Math.floor(terrainX/gridSquareSize);
 		int gridZ = (int) Math.floor(terrainZ/gridSquareSize);
 		
+		
+		if(gridX == 4 && gridZ == 6)
+		{
+			
+			int test = 0;
+			
+		}
 		float xCoord = (terrainX % gridSquareSize)/gridSquareSize;
 		float zCoord = (terrainZ % gridSquareSize)/gridSquareSize;
 		

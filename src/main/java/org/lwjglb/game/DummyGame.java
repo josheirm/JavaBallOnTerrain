@@ -48,7 +48,10 @@ public class DummyGame implements IGameLogic {
 	//static final
 	
 	//for setposition
-	
+
+	 boolean gDoneRotating  = false;
+	 float gRotationHeight = 0; 
+	 float gRotationWidth = 0; 
 	float theAnswer = 0;
 	// M
 	float yReducer = 0;
@@ -64,8 +67,8 @@ public class DummyGame implements IGameLogic {
 	
 	
 	
-	private  float SIZE = 2f;
-	private  int VERTEX_COUNT = 4;
+	private  float SIZE = 6f;
+	private  int VERTEX_COUNT = 11;
 	
 	
 	
@@ -262,7 +265,7 @@ public class DummyGame implements IGameLogic {
         
         
         
-        Texture texture = new Texture("textures/grassblockx.png");
+        Texture texture = new Texture("textures/grassblock.png");
         Mesh mesh = new Mesh(positions, textCoords, indices, texture);
         
         //ball
@@ -300,7 +303,7 @@ public class DummyGame implements IGameLogic {
         BufferedImage image = null;
         
         try {
-        	image = ImageIO.read(new File("textures/" + "heightmap" + ".png"));
+        	image = ImageIO.read(new File("textures/" + "heightmapp" + ".png"));
             }
         catch (IOException e) {
         
@@ -317,8 +320,9 @@ public class DummyGame implements IGameLogic {
 
         
         //////////Make terrain
-        VERTEX_COUNT = 4;
-        SIZE = 2;
+        //VERTEX_COUNT = 4;
+        //SIZE = 2;
+        /*
         int count = VERTEX_COUNT * VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
 		float[] normals = new float[count * 3];
@@ -360,27 +364,101 @@ public class DummyGame implements IGameLogic {
 				
 			}
 		}
+		*/
+        
+        VERTEX_COUNT = 11;
+        SIZE = 6;
+        
+        int count = VERTEX_COUNT * VERTEX_COUNT;
+		float[] vertices = new float[count * 3];
+		float[] normals = new float[count * 3];
+		float[] textureCoords = new float[count*2];
+		int[] indices2 = new int[6*(VERTEX_COUNT-1)*(VERTEX_COUNT-1)];
+		int vertexPointer = 0;
+		
+		//loops number of vertexes
+		//for(int i=-5;i<(VERTEX_COUNT-1);i++){
+		//	for(int j=-5;j<(VERTEX_COUNT-1);j++){
+				
+				
+				//loops number of vertexes
+				for(int i=-5;i<6;i++){
+					for(int j=-5;j<(6);j++){
+						
+				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
+				
+				
+				tempHeight =-.05f * terrain.getHeight(j+5, i+5, image);
+				vertices[vertexPointer*3+1] =  tempHeight;
+				theHeight[j + 5][i + 5] = tempHeight;
+				
+				
+				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
+				//normals[vertexPointer*3] = 0;
+				//normals[vertexPointer*3+1] = 1;
+				//normals[vertexPointer*3+2] = 0;
+				textureCoords[vertexPointer*2] = (float)j/((float)VERTEX_COUNT - 1);
+				textureCoords[vertexPointer*2+1] = (float)i/((float)VERTEX_COUNT - 1);
+				vertexPointer++;
+			}
+		}
+		int pointer = 0;
+		for(int gz=-0;gz<(VERTEX_COUNT-1);gz++){
+			for(int gx =-0;gx<(VERTEX_COUNT-1);gx++){
+				int topLeft = (gz*VERTEX_COUNT)+gx;
+				int topRight = topLeft + 1;
+				int bottomLeft = ((gz+1)*VERTEX_COUNT)+gx;
+				int bottomRight = bottomLeft + 1;
+				indices2[pointer++] = topLeft;
+				indices2[pointer++] = bottomLeft;
+				indices2[pointer++] = topRight;
+				indices2[pointer++] = topRight;
+				indices2[pointer++] = bottomLeft;
+				indices2[pointer++] = bottomRight;
+				
+			}
+		}
+		
+		
+		
+		
+		for (int k=0;k<=10;k++)
+		{
+			for(int l = 0; l <= 10; l++)
+			{
+			if (theHeight[l][k] == -1.0901959)	
+			{
+				System.out.println(l);
+				System.out.println(k);
+				System.out.println();
+			}
+			
+		}
+		}
+		
+		System.out.println(theHeight[4][6]);
 		
 		//vertices[5*3+1] =  .4f;//tempHeight;
 		//theHeight[1][1] =  .4f;//tempHeight;
 		
+		///////
+		//vertices[0*3+1] = .4f;//  tempHeight;
+		//theHeight[0][0] = .4f;//tempHeight;
+		///////////////
 		
-		vertices[0*3+1] = .4f;//  tempHeight;
-		theHeight[0][0] = .4f;//tempHeight;
-    
 		//////////
 		//float a1 = theHeight[0][0];
 		//float a2 = theHeight[0][1];
 		//float a3 = theHeight[1][0];
 		//float a4 = theHeight[1][1];
 		
-		//theHeight[0][0] = 0;
-		//theHeight[0][1] = 0;
+		//theHeight[0][0] = .30F;
+		//theHeight[0][1] = .30F;
 		//theHeight[1][0] = 0;
-		//theHeight[1][1] = 0;
+		//theHeight[1][1] = 0;W
 		
-		//vertices[0*3+1] =  0f;//tempHeight;
-		//vertices[1*3+1] =  0;//tempHeight;
+		//vertices[0*3+1] =  .30f;//tempHeight;
+		//vertices[1*3+1] =  .30F;//tempHeight;
 		
 		//vertices[2*3+1] =  0f;//tempHeight;
 		//vertices[3*3+1] =  0f;//tempHeight;
@@ -431,21 +509,11 @@ public class DummyGame implements IGameLogic {
     	
         int i = 0;
         	
-        	for(int terrainZ = 0; terrainZ < 4 ; terrainZ++)
-        	{
-        	for (int terrainX = 0; terrainX < 4 ; terrainX++)
-        	{
-        	
-        		
-        		
-        	}
-        		
-        	}
-        	i--;
         	
         	
         	
-        	terrainObj[0].setPosition(-.5f ,0f,  + (-7f+0)  );
+        	//terrainObj[0].setPosition(-.5f ,0f,  + (-7f+0)  );
+        	terrainObj[0].setPosition(0f ,0f,  + (-7f+0)  );
         	//terrainObj[1].setPosition(0f ,0f,  + (-7f+0)  );
         	//terrainObj[2].setPosition(-.5f ,0f,  + (-6f+0)  );
         	//terrainObj[3].setPosition(-0f ,0f,  + (-6f+0)  );
@@ -554,7 +622,7 @@ public class DummyGame implements IGameLogic {
 	//@Override
     public int input(Window window, MouseInput mouseInput)  {
       
-    	double sizeOfTerrain = 1024 * .005;
+     	double sizeOfTerrain = 1024 * .005;
     	//camera.setPosition(0, 1, 10);
     	cameraInc.set(0, -0, 0);
     	
@@ -736,18 +804,18 @@ public class DummyGame implements IGameLogic {
     	//	cameraInc.set(-5, -5 - gRot, 0);
     	//}
     	
-    	 if (window.isKeyPressed(GLFW_KEY_U)) {
-	    	 gZ += .3;
-	    	 //camera.setPosition(0, 0, -5);	
-	    	 camera.setRotation(0, gZ, 0);
-	    	 camera.setPosition(0, 0, -1);	 
-	    	 gameItems[1].setPosition(0, 0, -10);
-	    	 gameItems[0].setPosition(0, 0, -10);
-	    
+  //  	 if (window.isKeyPressed(GLFW_KEY_U)) {
+//	    	 gZ += .3;
+//	    	 //camera.setPosition(0, 0, -5);	
+//	    	 camera.setRotation(0, gZ, 0);
+//	    	 camera.setPosition(0, 0, -1);	 
+//	    	 gameItems[1].setPosition(0, 0, -10);
+//	    	 gameItems[0].setPosition(0, 0, -10);
+//	    
+ //   	 
+  //  	 }
     	 
-    	 }
-    	 
-    	 if (window.isKeyPressed(GLFW_KEY_E)) {
+    	 /*if (window.isKeyPressed(GLFW_KEY_E)) {
     		 float radius = 1f;
     		 
     		 
@@ -764,7 +832,7 @@ public class DummyGame implements IGameLogic {
        	  
        	  
     	 }
-    	 
+    	 */
     	 
     	 if (window.isKeyPressed(GLFW_KEY_X)) {
     		 float radius = 1f;
@@ -844,6 +912,8 @@ public class DummyGame implements IGameLogic {
     	 
     	 
     	 //strafe right
+    	 
+    	 /*
     	 if (window.isKeyPressed(GLFW_KEY_T)) {
           	
     		 cameraInc.x = 1;
@@ -860,8 +930,8 @@ public class DummyGame implements IGameLogic {
           	//gameItems[0].setPosition(gBallPositionX,      .43f/.5f*.8f * 2/height / 10 + .1f,      -3.5f-gZ ); 
     		 
     	 }
-    	 
-    	 //strafe left
+    	 */
+    	 /*//strafe left
     	 if (window.isKeyPressed(GLFW_KEY_R)) {
          	//for set position
     		 gBallPositionX = gBallPositionX - .05f;
@@ -874,9 +944,9 @@ public class DummyGame implements IGameLogic {
           	gameItems[0].setPosition(gBallPositionX,    .43f/.5f*.8f * 2/height / 10 + .1f,      -3.5f-gZ ); 
     		 
     	 }
+    	 */
     	 
-    	 
-    	 if (window.isKeyPressed(GLFW_KEY_Y)) {
+    /*	 if (window.isKeyPressed(GLFW_KEY_Y)) {
     		 
     		 gZ += .05f;
     		 gameItems[0].setPosition(0f,     answer2 ,     -3.6f-gZ ); 
@@ -884,7 +954,7 @@ public class DummyGame implements IGameLogic {
     		 
     	 }
     	 
-    	 
+    	*/ 
     	 
     	 if (window.isKeyPressed(GLFW_KEY_Z)) {
     		 
@@ -892,78 +962,264 @@ public class DummyGame implements IGameLogic {
     		 gameItems[0].setPosition(-0.0f,  theAnswer-.0001f  ,  -5.5f-gZ  );
     		 
     	 }
+
+		if (window.isKeyPressed(GLFW_KEY_Z)) {
+	 
+	 
+	 	gameItems[0].setPosition(-0.0f,  theAnswer-.0001f  ,  -5.5f-gZ  );
+	 
+		}
+
+
+    	 if (window.isKeyPressed(GLFW_KEY_Z)) {
+    		 
+    		 
+    		 gameItems[0].setPosition(-0.0f,  theAnswer-.0001f  ,  -5.5f-gZ  );
+    		 
+    	 }
+    	 
+    	 
+    	 
+    	 //clockwise 
+    	 if (window.isKeyPressed(GLFW_KEY_Y)) {
+    		 
+    		 gRotationHeight = terrain.findXValue(gY1);
+    		 gRotationWidth = terrain.findYValue(gY1);
+    		 
+    		 //float hypot = Math.sqrt((height*height) + Math.sqrt(width*width));
+    		 gDoneRotating = true;
+    		 
+    		 
+    		 
+    		 
+    	 }
+    	 
+    	 
+    	 
+    	 
+    	 
+    	 /////////////////////////////////////////////////////////////////
+    	 //counter clockwise, set new point to check height
+    	 if (window.isKeyPressed(GLFW_KEY_T)) {
+    		 
+    		
+    		 if (gY1 == 0 )
+    		 {
+    			 gY1 = 1;
+    			 //return(1);
+    		 }
+    		 else if (gY1 == 90 )
+    		 {
+    			 gY1 = 91;
+    		 }
+    		 else if (gY1 == 180 )
+    		 {
+    			 gY1 = 181;
+    		 }
+    		 else if (gY1 == 270 )
+    		 {
+    			 gY1 = 271;
+    		 }
+    		 else if (gY1 == 360 )
+    		 {
+    			 gY1 = 1;
+    		 }
+    		 
+    		 
+    		 
+    		 if(gY1 > 0 && gY1 < 90 )
+    		 {
+    			 //sin
+    			 gRotationHeight = terrain.findXValue(-gY1);
+        		 
+    			 gRotationWidth = terrain.findYValue(gY1);
+    			 
+    			 gRotationHeight = (float) Math.toDegrees(gRotationHeight);
+    			 gRotationWidth = (float) Math.toDegrees(gRotationWidth);
+    		 }
+    		 else if (gY1 > 90 && gY1 < 180)
+    		 {   //sin
+    			 gRotationHeight = terrain.findXValue(gY1);
+        		 gRotationWidth = terrain.findYValue(gY1);
+    			
+    		 }
+    		 else if (gY1 > 180  && gY1 < 270 )
+    		 {
+    			 //sin
+    			 gRotationHeight = terrain.findXValue(gY1);
+        		 gRotationWidth = terrain.findYValue(-gY1);
+    			 
+    		 }
+    		 else if (gY1 > 270 && gY1 < 360)
+    		 {
+    			 //sin
+    			 gRotationHeight = terrain.findXValue(-gY1);
+        		 gRotationWidth = terrain.findYValue(-gY1);
+    			 
+    		 }
+    		 else if (gY1 > 360 || gY1 < 0)
+				{
+	
+						int test = 0;
+					}
+    		 
+    		 
+    		
+    		 
+    		 //float hypot = Math.sqrt((height*height) + Math.sqrt(width*width));
+    		 gDoneRotating = true;
+    		 
+    		 try {
+ 				Thread.sleep(500);
+ 			} catch (InterruptedException e) {
+ 				// TODO Auto-generated catch block
+ 				e.printStackTrace();
+ 			}
+    		 
+    		 //theAnswer = terrain.getTheHeight(gRotationwidth,gRotationheight 	,0f,0f,theHeight);
+    		 
+        	 }
+    	 
     	 
     	 //////
+    	 //clockwise - use this to setup straight part of mesh
+    	 if (window.isKeyPressed(GLFW_KEY_R)) {
+    	 
+    		 gY1 = gY1 + 1;
+    		 if(gY1 == 361)
+    		 {
+    			 gY1 = 1;
+    		 }
+    		 terrainObj[0].setRotation(0,gY1,0  );
+    	 }
+    	 
+    	 //counter clockwise
+    	 if (window.isKeyPressed(GLFW_KEY_U)) {
+        	 
+    		 gY1 = gY1 - 1;
+    		 if (gY1 == -1)
+    		 {
+    			 gY1 = 359;
+    		 }
+    		 terrainObj[0].setRotation(0,gY1,0  );
+    	 }
+    	 
+    	 
+    	 
+    	 //left strafe
+    	 if (window.isKeyPressed(GLFW_KEY_O)) {
+    		 
+    		 
+    		 
+    	 }
+
+    	 //right strafe
+    	 if (window.isKeyPressed(GLFW_KEY_P)) {
+    		 
+    		 
+    		 
+    	 }
+    	 
+    	 
+    	 
     	 
     	 if (window.isKeyPressed(GLFW_KEY_E)) {
          	
         	 //change in z
-        	 gZ = gZ - .05f;
+        	 gZ = gZ + .125f;
         	
         	 
-        	 float zTerrain = (.5f - gZ);
+        	//move upe
+        	 float zTerrain = (5.5f *.6f + (gZ ));
+        	 //float zTerrain = 6;//(8f * .6f + gZ);
         	 
 
-        	
-        	 //theAnswer = terrain.getTheHeight(1f * 1.5f, zTerrain 	,0f,0f,theHeight);
-        	 //theAnswer = terrain.getTheHeight(1f * .75f, zTerrain 	,0f,0f,theHeight);
-        	 theAnswer = terrain.getTheHeight(1f * .5f, zTerrain 	,0f,0f,theHeight);
+
         	 
-          	 gameItems[0].setScale(.25f);
-        	 //scale of displayed terrain Y is .04 times height map's Y and image is centered on 
-          	 //displayed terrain
-          	//gameItems[0].setPosition(0.f,  .04f * answer  + 0.0625f,  -3.6f-gZ );
+        	 if (gDoneRotating == true)
+           	 {
+           		theAnswer = terrain.getTheHeight(gRotationHeight, gRotationWidth 	,0f,0f,theHeight);
+        		 
+           	 gDoneRotating = false;
+           	 }
+        	 
+        	 
+        	 else
+        	 {
+        	 theAnswer = terrain.getTheHeight(5.f*.6f , zTerrain 	,0f,0f,theHeight);
+        	 }
           	 
-          	//gameItems[0].setPosition(-0.0f,  theAnswer + .125f   ,  -3.5f-gZ  );
-          	//gameItems[0].setPosition(.375f,  theAnswer + .125f   ,  -6.5f-gZ  );
-          	 gameItems[0].setPosition(-.108f,  theAnswer + .125f   ,  -6.5f-gZ  );
-          	 //camera.setPosition(0, -5,-1-gZ);
-          	camera.setPosition(0, 1,-2-gZ);
-          	 //camera.setPosition(0, -8,-1-gZ);
+        	 
+        	 
+        	 
+        	 gameItems[0].setScale(1f);
+        	
+          	 gameItems[0].setPosition(0,  theAnswer +.5f  ,  -7+gZ  );
+          	 
+          	
+          	 
+          	camera.setPosition(0, -1,-1+gZ);
+        	
+          	 
         	
              try {
-    				Thread.sleep(500);
+    				Thread.sleep(50);
     			} catch (InterruptedException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
     	 }
+    	 
+    	 
+    	 
         ////////////////////
-           	
-    	 
-    	 //////
-    	 
-    	 
-    	
+        
         if (window.isKeyPressed(GLFW_KEY_W)) {
         	
         	 //change in z
-        	 gZ = gZ + .05f;
         	
+        	
+        	gZ = gZ - .125f;
         	 
-        	 float zTerrain2 = (.5f - gZ);
+        	
+        	//float zTerrain = (5.8f *.6f + (gZ * 10/6));
+        	 float zTerrain = (5.5f *.6f + (gZ));
+        	
+        	 if (gDoneRotating == true)
+           	 {
+           		theAnswer = terrain.getTheHeight(gRotationHeight, gRotationWidth 	,0f,0f,theHeight);
+
+            	
+           		
+           	 gDoneRotating = false;
+           	 }
+    		 
+        	 else
+        	 {
+
+        		 
+        	 
+        	 theAnswer = terrain.getTheHeight(5*.6f , zTerrain 	,0f,0f,theHeight); 
+        	 }
         	 
         	 
-        	 //theAnswer = terrain.getTheHeight(1f * .25f, zTerrain2 	,0f,0f,theHeight);
-        	 theAnswer = terrain.getTheHeight(.5f * 1.f, zTerrain2 	,0f,0f,theHeight);
         	 
+          	 gameItems[0].setScale(1f);
         	 
-        	 //theAnswer = terrain.getTheHeight(1f * 1.5f, zTerrain 	,0f,0f,theHeight);
-          	 gameItems[0].setScale(.25f);
-        	 //scale of displayed terrain Y is .04 times height map's Y and image is centered on 
-          	 //displayed terrain
-          	//gameItems[0].setPosition(0.f,  .04f * answer  + 0.0625f,  -3.6f-gZ );
+          	
+          	
+   		 
+   		 
+   		 
+          	gameItems[0].setPosition(0,  theAnswer +.5f  ,  -7+gZ  );
+        	 
           	 
-          	//gameItems[0].setPosition(-.25f,  theAnswer + .125f   ,  -6.5f-gZ  );
-          	 gameItems[0].setPosition(-.108f,  theAnswer + .125f   ,  -6.5f-gZ  );
           	 
           	 
-          	 //camera.setPosition(0, -5,-1-gZ);
-          	camera.setPosition(0, 1,-2-gZ);
-          	 //camera.setPosition(0, -8,-1-gZ);
+          	camera.setPosition(0, -1,-1+gZ);
         	
              try {
-    				Thread.sleep(500);
+    				Thread.sleep(250);
     			} catch (InterruptedException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
@@ -973,126 +1229,13 @@ public class DummyGame implements IGameLogic {
           	
            	
            
-        	float radius = -1f ;
-        	
-        	
-        	try {
-				Thread.sleep(0);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	
-        	
-        	/////////////
-        	
-        	float theta = camera.getRotation().y;//)m_rotationY;
-        	
-        	float phi = camera.getRotation().x;
-
-        	//Thease equations are from the wikipedia page, linked above
-        	float xMove = radius*Math.sin(phi)*Math.cos(theta);
-        	float yMove = radius*Math.sin(phi)*Math.sin(theta);
-        	float zMove = radius*Math.cos(phi);
-
         	
         	/////////////
         	
         	
-        	
-        	
-        	//Z++;
-        	//on scaled terrain
-        	//accumulatedX = accumulatedX  + xMove / 20f ;
-        	//accumulatedZ = accumulatedZ  + zMove / 20f ;	
-        		
-        	//System.out.println(xMove);
-        	//System.out.println(zMove);
-        	//System.out.println(Z +" .05's");
-        	//System.out.println("");
-        	//worldX = worldX + xMove ;
-        	//worldZ = worldZ + zMove;
-        	
-        		/*
-        		if (accumulatedX > 3.95 * 3)
-            	{
-            		containingX = 3.95f * 3;
-            		
-            	}
-        		if (accumulatedX > 3.95 * 2)
-            	{
-            		containingX = 3.95f * 2;
-            		
-            	}
-        		if (accumulatedX > 3.95 )
-            	{
-            		containingX = 3.95f;
-            		
-            	}
-        		//3.95 = 80 steps at .05 a step
+        	       		
         		
         		
-        		if (accumulatedX < -3.95 * 4 )
-            	{
-            		containingX = -3.95f * 4;
-            		
-            	}
-        		
-        		if (accumulatedX < -3.95 * 3)
-            	{
-            		containingX = -3.95f * 3;
-            		
-            	}
-        		if (accumulatedX < -3.95 * 2)
-            	{
-            		containingX = -3.95f * 2;
-            		
-            	}
-        		if (accumulatedX < 0)
-            	{
-            		containingX = -3.95f;
-            		
-            	}
-        		
-        		
-        		//going towards user
-        		if (accumulatedZ > 3.95 * 3)
-            	{
-            		containingZ = 3.95f * 3;
-            		
-            	}
-        		if (accumulatedZ > 3.95 * 2)
-            	{
-            		containingZ = 3.95f * 2;
-            		
-            	}
-        		if (accumulatedZ > 3.95 )
-            	{
-            		containingZ = 3.95f;
-            		
-            	}
-        		//3.95 = 80 steps at .05 a step
-        		
-        		
-        		//going into screen
-        		if (accumulatedZ < -3.95 * 3 )
-            	{
-            		containingZ = -3.95f * 3;
-            		
-            	}
-        		
-        		if (accumulatedZ < -3.95 * 2)
-            	{
-            		containingZ = -3.95f * 2;
-            		
-            	}
-        		if (accumulatedZ < -3.95 * 1)
-            	{
-            		containingZ = -3.95f;
-            		
-            	}
-        		
-        		*/
         	
         	
         	//////
@@ -1100,35 +1243,12 @@ public class DummyGame implements IGameLogic {
         	
         	
         		
-        		//float answer = terrain.getTheHeight(worldX, worldZ , 	containingX, containingZ ,  theHeight); 
         		
         	
         	
         	
-        	//cameraInc.set(xMove, yMove, zMove);
+        	
     	}
-        	//m_positionX += xMove;
-        	//m_positionY += yMove;
-        	//m_positionZ += zMove;
-        	
-        
-        	//newx = oldx + (cos(angle)*speed);
-        	//newz = oldz + (sin(angle)*speed);
-        	//Your angle has to be in radians (divide by 180 and multiply by pi if it is in degrees) if you use sin() and cos() in math.h
-        	
-        	
-        	//angleOfRotation = angleOfRotation + 90;
-        	
-        	//angle = 3.14f*(angleOfRotation/180);
-        	
-        	//newX = oldX + (Math.cos(angle)*.1f);
-        	//newZ = oldZ + (Math.sin(angle)*.1f);
-        	//oldX = newX;
-        	///oldZ = newZ;
-        	
-        	//camera.setPosition(newX, 1, newZ);
-        	//gamxeItems[0].setPosition(newX, 1, newZ);
-        	//angleOfRotation = angleOfRotation - 90;
         	
             
          if (window.isKeyPressed(GLFW_KEY_A)) {
