@@ -68,8 +68,8 @@ public class DummyGame implements IGameLogic {
 	
 	
 	
-	private  float SIZE = 6f;
-	private  int VERTEX_COUNT = 11;
+	private  float SIZE = 60f;
+	private  int VERTEX_COUNT = 110;
 	
 	
 	
@@ -367,8 +367,8 @@ public class DummyGame implements IGameLogic {
 		}
 		*/
         
-        VERTEX_COUNT = 11;
-        SIZE = 6;
+        VERTEX_COUNT = 110;
+        SIZE = 60;
         
         int count = VERTEX_COUNT * VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
@@ -382,16 +382,17 @@ public class DummyGame implements IGameLogic {
 		//	for(int j=-5;j<(VERTEX_COUNT-1);j++){
 				
 				
+		//JOSH CHECK THIS!
 				//loops number of vertexes
-				for(int i=-5;i<6;i++){
-					for(int j=-5;j<(6);j++){
+				for(int i=-110/2;i<55;i++){
+					for(int j=-110/2;j<(55);j++){
 						
 				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
 				
 				
-				tempHeight =-.05f * terrain.getHeight(j+5, i+5, image);
+				tempHeight =-.05f * terrain.getHeight(j+(110/2), i+(110/2), image);
 				vertices[vertexPointer*3+1] =  tempHeight;
-				theHeight[j + 5][i + 5] = tempHeight;
+				theHeight[j + (110/2)][i + (110/2)] = tempHeight;
 				
 				
 				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
@@ -1133,11 +1134,11 @@ public class DummyGame implements IGameLogic {
     	 if (window.isKeyPressed(GLFW_KEY_E)) {
          	
         	 //change in z
-        	 gZ = gZ + .125f;
+        	 gZ = gZ + .5f;
         	
         	 
         	//move upe
-        	 float zTerrain = (5.5f *.6f + (gZ));
+        	 float zTerrain = (55f *.5504f + (gZ));
         	 //float zTerrain = 6;//(8f * .6f + gZ);
         	 
 
@@ -1153,24 +1154,24 @@ public class DummyGame implements IGameLogic {
         	 
         	 else
         	 {
-        	 theAnswer = terrain.getTheHeight(5.5f*.6f , zTerrain 	,0f,0f,theHeight);
+        	 theAnswer = terrain.getTheHeight(55f*.5504f , zTerrain 	,0f,0f,theHeight);
         	 }
           	 
         	 
         	 
         	 
-        	 gameItems[0].setScale(1f);
+        	 gameItems[0].setScale(3f);
         	
-          	 gameItems[0].setPosition(0,  theAnswer +.5f  ,  -7+gZ  );
+          	 gameItems[0].setPosition(0,  theAnswer +.5f*3  ,  -7+gZ  );
           	 
           	
           	 
-          	camera.setPosition(0, -1,-1+gZ);
+          	camera.setPosition(0, 10,20+gZ);
         	
           	 
         	
              try {
-    				Thread.sleep(50);
+    				Thread.sleep(30);
     			} catch (InterruptedException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
@@ -1186,11 +1187,11 @@ public class DummyGame implements IGameLogic {
         	 //change in z
         	
         	
-        	gZ = gZ - .125f;
+        	gZ = gZ - .5f;
         	 
         	
-        	//float zTerrain = (5.8f *.6f + (gZ * 10/6));
-        	 float zTerrain = (5.5f *.6f + (gZ));
+        	 // 30 should be center
+        	 float zTerrain = (55f *.5504f + (gZ));
         	
         	 if (gDoneRotating == true)
            	 {
@@ -1206,28 +1207,28 @@ public class DummyGame implements IGameLogic {
 
         		 
         	 
-        	 theAnswer = terrain.getTheHeight(5.5f*.6f , zTerrain 	,0f,0f,theHeight); 
+        	 theAnswer = terrain.getTheHeight(55f*.5504f , zTerrain 	,0f,0f,theHeight); 
         	 }
         	 
         	 
         	 
-          	 gameItems[0].setScale(1f);
+          	 gameItems[0].setScale(3f);
         	 
           	
           	
    		 
    		 
    		 
-          	gameItems[0].setPosition(0,  theAnswer+.5f    ,  -7.f+gZ  );
+          	gameItems[0].setPosition(0,  theAnswer+.5f*3    ,  -7.f+gZ  );
       
         	 
           	 
           	 
           	 
-          	camera.setPosition(0, -1,-1+gZ);
+          	camera.setPosition(0, 10,20+gZ);
         	
              try {
-    				Thread.sleep(500);
+    				Thread.sleep(30);
     			} catch (InterruptedException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
