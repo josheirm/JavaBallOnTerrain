@@ -49,6 +49,7 @@ public class DummyGame implements IGameLogic {
 	
 	//for setposition
 
+	float gRotateY = 0;
 	 boolean gDoneRotating  = false;
 	 float gRotationHeight = 0; 
 	 float gRotationWidth = 0; 
@@ -1106,17 +1107,23 @@ public class DummyGame implements IGameLogic {
     	 
     	 
     	 
-    	 //left strafe
+    	 //rotate
     	 if (window.isKeyPressed(GLFW_KEY_O)) {
+    		 
+    		 //terrainObj[0].setRotation(0,gRotateY,0  );
+    		 //gameItems[0].setRotation(0,gRotateY,0);
+    		 //gRotateY = gRotateY - 1;
     		 
     		 
     		 
     	 }
 
-    	 //right strafe
+    	 //rotate
     	 if (window.isKeyPressed(GLFW_KEY_P)) {
     		 
-    		 
+    		 terrainObj[0].setRotation(0,gRotateY,0  );
+    		 //gameItems[0].setRotation(0,gRotateY,0);w
+    		 gRotateY = gRotateY + 1;
     		 
     	 }
     	 
@@ -1130,7 +1137,7 @@ public class DummyGame implements IGameLogic {
         	
         	 
         	//move upe
-        	 float zTerrain = (5.5f *.6f + (gZ ));
+        	 float zTerrain = (5.5f *.6f + (gZ));
         	 //float zTerrain = 6;//(8f * .6f + gZ);
         	 
 
@@ -1146,7 +1153,7 @@ public class DummyGame implements IGameLogic {
         	 
         	 else
         	 {
-        	 theAnswer = terrain.getTheHeight(5.f*.6f , zTerrain 	,0f,0f,theHeight);
+        	 theAnswer = terrain.getTheHeight(5.5f*.6f , zTerrain 	,0f,0f,theHeight);
         	 }
           	 
         	 
@@ -1199,7 +1206,7 @@ public class DummyGame implements IGameLogic {
 
         		 
         	 
-        	 theAnswer = terrain.getTheHeight(5*.6f , zTerrain 	,0f,0f,theHeight); 
+        	 theAnswer = terrain.getTheHeight(5.5f*.6f , zTerrain 	,0f,0f,theHeight); 
         	 }
         	 
         	 
@@ -1211,7 +1218,8 @@ public class DummyGame implements IGameLogic {
    		 
    		 
    		 
-          	gameItems[0].setPosition(0,  theAnswer +.5f  ,  -7+gZ  );
+          	gameItems[0].setPosition(0,  theAnswer+.5f    ,  -7.f+gZ  );
+      
         	 
           	 
           	 
@@ -1219,7 +1227,7 @@ public class DummyGame implements IGameLogic {
           	camera.setPosition(0, -1,-1+gZ);
         	
              try {
-    				Thread.sleep(250);
+    				Thread.sleep(500);
     			} catch (InterruptedException e) {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
@@ -1230,7 +1238,7 @@ public class DummyGame implements IGameLogic {
            	
            
         	
-        	/////////////
+        	/////ww////////
         	
         	
         	       		
@@ -1338,7 +1346,7 @@ public class DummyGame implements IGameLogic {
             cameraInc.y = -1;
         } 
         //zoom
-        if (window.isKeyPressed(GLFW_KEY_O)) {
+        /*if (window.isKeyPressed(GLFW_KEY_O)) {
         	//cameraInc.x = 1;
         	
         	 //camera.setRotationZ();
@@ -1364,6 +1372,7 @@ public class DummyGame implements IGameLogic {
         	//camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
        	 
         }
+        */
         
         /*else if (window.isKeyPressed(GLFW_KEY_M)) {
         	//cameraInc.x = 1;

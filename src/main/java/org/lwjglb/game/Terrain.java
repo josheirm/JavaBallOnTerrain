@@ -50,6 +50,8 @@ public class Terrain {
 		//	height = -20;
 		//}
 		//height = height / 2f;
+		//return 20;
+		
 		return height;
 		//return(0);
 		}
