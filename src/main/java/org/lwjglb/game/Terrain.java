@@ -77,7 +77,10 @@ public class Terrain {
 		float terrainZ = worldZ - zOfGrid;
 		//gridsquaresize = grid size / vertex - 1
 		//180 / 79 = 2.278f
-		float gridSquareSize = .5504f;  
+		//float gridSquareSize = .5504f;  
+		
+		float gridSquareSize = 6.299f;  
+		
 		int gridX = (int) Math.floor(terrainX/gridSquareSize);
 		int gridZ = (int) Math.floor(terrainZ/gridSquareSize);
 		
