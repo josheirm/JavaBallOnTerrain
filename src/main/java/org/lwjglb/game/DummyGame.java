@@ -1186,11 +1186,11 @@ public class DummyGame implements IGameLogic {
     	 if (window.isKeyPressed(GLFW_KEY_E)) {
          	
         	 //change in z   .5
-        	 gZ = gZ + 2;
+        	
         	
         	 
         	//move upe
-        	 float zTerrain = (64f *6.299f + (gZ));
+        	 float zTerrain = (63.5f *6.299f + (gZ));
         	 //float zTerrain = 6;//(8f * .6f + gZ);
         	 
 
@@ -1206,7 +1206,7 @@ public class DummyGame implements IGameLogic {
         	 
         	 else
         	 {
-        	 theAnswer = terrain.getTheHeight(64f*6.299f , zTerrain 	,0f,0f,theHeight);
+        	 theAnswer = terrain.getTheHeight(63.5f*6.299f , zTerrain 	,0f,0f,theHeight);
         	 }
           	 
         	 
@@ -1214,12 +1214,20 @@ public class DummyGame implements IGameLogic {
         	 
         	 gameItems[0].setScale(3f);
         	
-          	 gameItems[0].setPosition(0,  theAnswer +.5f*3  ,  -7+gZ  );
+        	 //really should be .5f times three.  This is set to dig in a bit!
+          	 gameItems[0].setPosition(0,  theAnswer +.5f  ,  gZ  );
+          	 
+          	 
+          	System.out.println(theAnswer);
+          	System.out.println();
           	 
           	
-          	 
-          	camera.setPosition(0, 10,20+gZ);
+          	//for other heightmap
+          	//camera.setPosition(0, 10,100+gZ);
+          	camera.setPosition(0, 10,40+gZ);
+          	
         	
+          	gZ = gZ + 2;
           	 
         	
              try {
