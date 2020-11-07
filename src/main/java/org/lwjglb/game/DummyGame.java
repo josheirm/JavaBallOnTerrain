@@ -43,11 +43,7 @@ import java.io.File;
 
 public class DummyGame implements IGameLogic {
 
-	//glMatrixMode(GL_MODELVIEW);
 	
-	//static final
-	
-	//for setposition
 
 	float gRotateY = 0;
 	 boolean gDoneRotating  = false;
@@ -81,8 +77,7 @@ public class DummyGame implements IGameLogic {
 	float zBallDistance  = 0;
 	
 	float angleForBall = 0;
-	//private  float SIZE = 800f;
-	//private  int VERTEX_COUNT = 10;
+	
 	
 	float[][] theHeight = new float[VERTEX_COUNT][VERTEX_COUNT];
 	
@@ -105,7 +100,7 @@ public class DummyGame implements IGameLogic {
 	float containingZ = 0f; 
 	
 	
-	//?
+	
 	float gX = 0;
     float gY = 0f;
 	float gY1 = 0;
@@ -118,14 +113,13 @@ public class DummyGame implements IGameLogic {
 	float oldX = 0;
 	float oldZ = -3.5f;
 	float angle = 0;
-	//private static final float SIZE = 800;
+	
 	private static final float MAX_HEIGHT = 40;
 	private static final float MAX_PIXEL_COLOUR = 256 * 256 * 256;
 	
 	
     private static final float MOUSE_SENSITIVITY = 0.2f;
 
-    //GameItem gameItem5 = newx GameItem(mesh);
     
     
     //josh, this was final..
@@ -155,30 +149,15 @@ public class DummyGame implements IGameLogic {
     @Override
     public void init(Window window) throws Exception {        renderer.init(window);
         
-        //System.out.println("OpenGL version: " + GL11.glGetString(GL11.GL_VERSION));
-
-//        GL.createCapabilities();
         
-        //gameItem5
-        
-        
-    /////////
-    
-    
-    //////////
-    
     
         float ga = 0.0f;
-        ga = 77f * .08f;
         
-        //generateTerrain(Loader loader){
+        
+        
     		
         	camera.setPosition(0, 1,-3);
-           
-        	//check line up of cube
-        //camera.setRotation(5f, 1, 4);
-           //camera.setRotation(0, 1, 4);
-    		//////////////////
+        
         
         // Create the Mesh
         float[] positions = new float[]{
@@ -279,16 +258,8 @@ public class DummyGame implements IGameLogic {
         	
         float y = 0;
         
-       
-        
-        
-        
-        
-        
+  
         gameItem1.setScale(0.20f);
-        
-        
-        
         
         GameItem gameItem2 = new GameItem(mesh);
         gameItem2.setScale(0.4f);
@@ -319,60 +290,8 @@ public class DummyGame implements IGameLogic {
         
         
         float a = 0;
-        a = 81%40;// * 80 * 80; 
-        a = 0%40;
-        //////
-
         
-        //////////Make terrain
-        //VERTEX_COUNT = 4;
-        //SIZE = 2;
-        /*
-        int count = VERTEX_COUNT * VERTEX_COUNT;
-		float[] vertices = new float[count * 3];
-		float[] normals = new float[count * 3];
-		float[] textureCoords = new float[count*2];
-		int[] indices2 = new int[6*(VERTEX_COUNT-1)*(VERTEX_COUNT-1)];
-		int vertexPointer = 0;
-		
-		
-		for(int i=-0;i<(VERTEX_COUNT);i++){
-			for(int j=-0;j<(VERTEX_COUNT);j++){
-				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
-				
-				
-				tempHeight = terrain.getHeight(j+0, i+0, image);
-				vertices[vertexPointer*3+1] =  tempHeight;
-				theHeight[j + 0][i + 0] = tempHeight;
-				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
-				//normals[vertexPointer*3] = 0;
-				//normals[vertexPointer*3+1] = 1;
-				//normals[vertexPointer*3+2] = 0;
-				textureCoords[vertexPointer*2] = (float)j/((float)VERTEX_COUNT - 1);
-				textureCoords[vertexPointer*2+1] = (float)i/((float)VERTEX_COUNT - 1);
-				vertexPointer++;
-			}
-		}
-		int pointer = 0;
-		for(int gz=-0;gz<(VERTEX_COUNT-1);gz++){
-			for(int gx =-0;gx<(VERTEX_COUNT-1);gx++){
-				int topLeft = (gz*VERTEX_COUNT)+gx;
-				int topRight = topLeft + 1;
-				int bottomLeft = ((gz+1)*VERTEX_COUNT)+gx;
-				int bottomRight = bottomLeft + 1;
-				indices2[pointer++] = topLeft;
-				indices2[pointer++] = bottomLeft;
-				indices2[pointer++] = topRight;
-				indices2[pointer++] = topRight;
-				indices2[pointer++] = bottomLeft;
-				indices2[pointer++] = bottomRight;
-				
-			}
-		}
-		*/
         
-        //VERTEX_COUNT = 110;
-        //SIZE = 60;
         
         VERTEX_COUNT = 128;
         SIZE = 800;
@@ -384,43 +303,8 @@ public class DummyGame implements IGameLogic {
 		int[] indices2 = new int[6*(VERTEX_COUNT-1)*(VERTEX_COUNT-1)];
 		int vertexPointer = 0;
 		
-		//loops number of vertexes
-		//for(int i=-5;i<(VERTEX_COUNT-1);i++){
-		//	for(int j=-5;j<(VERTEX_COUNT-1);j++){
-				
-				
 		
-		/*
-		 * 
-		 * //loops number of vertexes
-				for(int i=-110/2;i<55;i++){
-					for(int j=-110/2;j<(55);j++){
-						
-				vertices[vertexPointer*3] = (float)j/((float)VERTEX_COUNT - 1) * SIZE;
 				
-				
-				tempHeight =-.05f * terrain.getHeight(j+(110/2), i+(110/2), image);
-				vertices[vertexPointer*3+1] =  tempHeight;
-				theHeight[j + (110/2)][i + (110/2)] = tempHeight;
-				
-				
-				vertices[vertexPointer*3+2] = (float)i/((float)VERTEX_COUNT - 1) * SIZE;
-				//normals[vertexPointer*3] = 0;
-				//normals[vertexPointer*3+1] = 1;
-				//normals[vertexPointer*3+2] = 0;
-				textureCoords[vertexPointer*2] = (float)j/((float)VERTEX_COUNT - 1);
-				textureCoords[vertexPointer*2+1] = (float)i/((float)VERTEX_COUNT - 1);
-				vertexPointer++;
-			}
-		}
-		 */ 
-		 
-		
-		
-		
-		
-		//JOSH CHECK THIS!
-				//loops number of vertexes
 				for(int i=-64;i<VERTEX_COUNT/2;i++){
 					for(int j=-64;j<(VERTEX_COUNT/2);j++){
 						
@@ -464,29 +348,12 @@ public class DummyGame implements IGameLogic {
 		
 		
 		
-		for (int k=0;k<=10;k++)
-		{
-			for(int l = 0; l <= 10; l++)
-			{
-			if (theHeight[l][k] == -1.0901959)	
-			{
-				System.out.println(l);
-				System.out.println(k);
-				System.out.println();
-			}
-			
-		}
-		}
 		
-		System.out.println(theHeight[4][6]);
 		
-		//vertices[5*3+1] =  .4f;//tempHeight;
-		//theHeight[1][1] =  .4f;//tempHeight;
 		
-		///////
-		vertices[0*3+1] = .4f;//  tempHeight;
-		theHeight[0][0] = .4f;//tempHeight;
-		///////////////
+		
+		//vertices[0*3+1] = .4f;//  tempHeight;
+		//theHeight[0][0] = .4f;//tempHeight;
 		
 		//////////
 		//float a1 = theHeight[0][0];
@@ -525,28 +392,22 @@ public class DummyGame implements IGameLogic {
 		pos.y = .5f;		
 		float yyy = terrain.barryCentric(v1, v2, v3, pos);
 		
-		int testtest = 0;
 		
-		
-		//float ans = terrain.getTheHeight(.5f,.25f,0,0, theHeight);
 		
 		Texture texture2 = new Texture("textures/grass.png");
-        // Mesh mesh = new Mesh(positions, textCoords, indices, texture);
-		Mesh mesh2 = new Mesh(vertices, textureCoords, indices2, texture2);
+        Mesh mesh2 = new Mesh(vertices, textureCoords, indices2, texture2);
         
-       //int a = (int) (800 * .007);
+       
 		
         GameItem gameItem5 = new GameItem(mesh2);
-        //gameItem5.setScale(0.007f);
+        
         gameItem5.setPosition(-2.50f + .5f,0,-4);
 		
         
         
     	
-    	for(int i = 0; i < 1; i++)
-    	{
-    	terrainObj[i] = new GameItem(mesh2);
-    	}
+    	
+    	terrainObj[0] = new GameItem(mesh2);
     	
     	
         int i = 0;
@@ -554,91 +415,10 @@ public class DummyGame implements IGameLogic {
         	
         	
         	
-        	//terrainObj[0].setPosition(-.5f ,0f,  + (-7f+0)  );
         	terrainObj[0].setPosition(0f ,0f, (0)  );
-        	//terrainObj[1].setPosition(0f ,0f,  + (-7f+0)  );
-        	//terrainObj[2].setPosition(-.5f ,0f,  + (-6f+0)  );
-        	//terrainObj[3].setPosition(-0f ,0f,  + (-6f+0)  );
-        	
-        	//terrainObj[4].setPosition(-.5f ,0f,  + (-7f+0)  );
-        	//terrainObj[5].setPosition(0f ,0f,  + (-7f+0)  );
-        	//terrainObj[6].setPosition(-.5f ,0f,  + (-6f+0)  );
-        	//terrainObj[7].setPosition(-0f ,0f,  + (-6f+0)  );
         	
         	
         	
-        	
-        	/*
-        	float k = 1;
-        	for(int j = 0; j < 0 ; j++)
-        	{
-        	
-        		//terrainObj[j].setPosition(-7.2f ,-1f,  + (k*-7.2f)  );
-        		terrainObj[j].setPosition(-.5f ,0f,  + (-7f+k)  );
-        		
-        		
-        		
-        		
-        		
-        		//terrainObj[j].setScale(.04f);
-            	
-        		k++;
-        		
-        	}
-        	k=1;
-        	for(int j = 7; j < 14 ; j++)
-        	{
-        	
-        		terrainObj[j].setPosition(-14.4f ,0,  + (k*-7.2f)  );
-            	terrainObj[j].setScale(.04f);
-            	
-        		k++;
-        		
-        	}
-        	k=1;
-        	for(int j = 14; j < 21 ; j++)
-        	{
-        	
-        		terrainObj[j].setPosition(-21.6f,0,  + (k*-7.2f)  );
-            	terrainObj[j].setScale(.04f);
-            	
-        		k++;
-        		
-        	}
-        	k=1;
-        	for(int j = 21; j < 28 ; j++)
-        	{
-        	
-        		terrainObj[j].setPosition(0 ,0,  + (k*-7.2f)  );
-            	terrainObj[j].setScale(.04f);
-            	
-        		k++;
-        		
-        	}
-            	
-        	k=1;
-        	for(int j = 28; j < 35 ; j++)
-        	{
-        	
-        		terrainObj[j].setPosition(7.2f,0,  + (k*-7.2f)  );
-            	terrainObj[j].setScale(.04f);
-            	
-        		k++;
-        		
-        	}
-            	
-        	k=1;
-        	for(int j = 35; j < 41 ; j++)
-        	{
-        	
-        		terrainObj[j].setPosition(14.4f,0,  + (k*-7.2f)  );
-            	terrainObj[j].setScale(.04f);
-            	
-        		k++;
-        		
-        	}
-            	
-        	*/
         	
     		
         
@@ -646,118 +426,32 @@ public class DummyGame implements IGameLogic {
         terrainItems = new GameItem[]{gameItem1,gameItem2, gameItem3, gameItem4, gameItem5};
         
         gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f,    (-1 -.05f));
-        //gameItems[0].setPosition(0f,1.5f+ 1f *  -.8f - .5f + .13f, (-1 -.05f) - 7.6f/2 + .25f );
         
          camera.setPosition(0, 1f,1 - gZ);
-        //camera.setPosition(0, .8f,.18f - gZ);
-         //tempHeight = 3; 
+        
         
     }
     
     
-    
-    
-    
-
-    
+  
 
 	//@Override
     public int input(Window window, MouseInput mouseInput)  {
       
      	double sizeOfTerrain = 1024 * .005;
-    	//camera.setPosition(0, 1, 10);
+    	
     	cameraInc.set(0, -0, 0);
     	
-    	//deeper
-    	
-    	/*if (window.isKeyPressed(GLFW_KEY_Z)) {
-    		 System.out.println("---Z pressed--- .2f");
-    		 
-    		
-    		 flag2 = 0;
-    		//float answer = terrain.getTheHeight(40*2, 40*2, 0 , 0 , theHeight); 
-    		
-    		 float zTerrain = (3.6f + gZ) * 25f;
-        	 
-        	 int gridZ = (int) Math.floor(zTerrain/2.278f);
-        	 
-        	 
-        	 //these two work with set position below
-        	 float answ = theHeight[40][gridZ];
-        	 //float answer = terrain.getTheHeight(40f*2.278f, 40*2.278f	 	,0f,0f,theHeight);
-        	 //float answer = terrain.getTheHeight(90f*2.278f, zTerrain	 	,0f,0f,theHeight);
-        	 float answer = terrain.getTheHeight(79f * .5f * 2.278f, zTerrain 	,0f,0f,theHeight);
-           	
-    		 
-        	 gameItems[0].setScale(.125f);
-        	 
-        	 
-     		
-        	 
-        	 
-        	 //gameItems[0].setPosition(0.f,     tempHeight * 0.05f + .25f ,    -3.6f-gZ );
-        	 gameItems[0].setPosition(0f,     answer * 0.04f + .0625f + yReducer ,    -3.6f-gZ  );
-        	 yReducer = yReducer - .01f;
-        	 
-        	 
-        	 
-        	 
-    		 
-    		//answer = answer * .14f + .125f * .25f;
-    		//answer = answer * .14f + .125f * .25f;
-    		
-    		//gameItems[0].setPosition(0,    -.75f ,     -3.6f-gZ ); 
-    		//camera.setPosition(0,1,-1 - gZ);
-    		
-        	 camera.setPosition(0, 1,-2.2f - gZ );
-        	 //camera.setPosition(0,1,-2.2f);
-    		
-    		 System.out.println("--beg Z pressed--answer, Z--");
-       		 System.out.println(zTerrain);
-       		 System.out.println(answer);
-        	 //System.out.println(theHeight[0][(int) gZ]); 
-        	 System.out.println(yReducer);
-       		 System.out.println("--end----");
-       		 
-       		try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	
-    		
-    		
-    	}
-    	
-    	
-    	
-    	
-    	
-    	*/
-    	
-    	//NO
+    
     	if (window.isKeyPressed(GLFW_KEY_M)) {
     		
-    		//tempHeight = tempHeight - .1f;
+    		
     		
     		changeM = changeM - .1f;
     		gameItems[0].setPosition(0.f     ,-.12f +changeM ,     -3.6f-gZ ); 
     		
     		
-    		//if (flag2 == 0)
-    	//	{
-    	//		float answer = terrain.getTheHeight(35*2, 35*2, 0 , 0 , theHeight); 
-        //		
-    	//	//answer2 = theHeight[35*2][35*2]; 
-    	//	answer2 = answer2 * .14f + .125f;
-    	//	flag2 = 1;
-    	//	}
-    		
-    		
-    	//	answer2 = answer2 - .1f;
-    		
-   	//	 gameItems[0].setPosition(-5f,     answer2,     -3.6f-gZ ); 
+    		 
    		 
    		 System.out.println("--beg M pressed--answer--");
    		 System.out.println(-.12f +changeM);
@@ -772,7 +466,7 @@ public class DummyGame implements IGameLogic {
     	}
     	
     	
-    	//no
+    
     	if (window.isKeyPressed(GLFW_KEY_C)) {
     		
     		 tempHeight = tempHeight - .01f;
@@ -790,7 +484,7 @@ public class DummyGame implements IGameLogic {
          	
     		
     	}
-    	//.197
+    	
     	if (window.isKeyPressed(GLFW_KEY_V)) {
     		
     		tempHeight = tempHeight - .001f;
@@ -825,56 +519,7 @@ public class DummyGame implements IGameLogic {
        		
        	}
     		
-    		
-    	
-    	//if (window.isKeyPressed(GLFW_KEY_V)) {
-    	//	
-    	//	gRot += .1;
-    	//	cameraInc.set(-5, 0 + gRot, -10);
-    	//	gameItems[4].getPosition();//0, -10, 0);
-    	//	terrainItems[4].getPosition();//0, -10, 0);
-    	//		   		
-    	//	}
-    	
-    	
-    	
-    	
-    	
-    	//
-    	//if (window.isKeyPressed(GLFW_KEY_B)) {
-    	//	gRot -= .1;
-    	//	cameraInc.set(-5, -5 - gRot, 0);
-    	//}
-    	
-  //  	 if (window.isKeyPressed(GLFW_KEY_U)) {
-//	    	 gZ += .3;
-//	    	 //camera.setPosition(0, 0, -5);	
-//	    	 camera.setRotation(0, gZ, 0);
-//	    	 camera.setPosition(0, 0, -1);	 
-//	    	 gameItems[1].setPosition(0, 0, -10);
-//	    	 gameItems[0].setPosition(0, 0, -10);
-//	    
- //   	 
-  //  	 }
-    	 
-    	 /*if (window.isKeyPressed(GLFW_KEY_E)) {
-    		 float radius = 1f;
-    		 
-    		 
-    		 
-         	
-    		
-    		 gZ -= .05;// * 144; 
-    		 //.9
-    		 gameItems[0].setPosition(0f,.43f/.5f*.8f * 2/height / 10 + .1f, -1 -2.5f+gZ );// - (+ 7.6f/2f ) );
-             
-        	 
-        	 
-       	  //gameItems[0].setScale(.25f);
-       	  
-       	  
-    	 }
-    	 */
+    
     	
     	
     	if (window.isKeyPressed(GLFW_KEY_N)) {
@@ -892,9 +537,7 @@ public class DummyGame implements IGameLogic {
     		 
          	
     		
-    		 gZ -= .05;// * 144; 
-    		 //.9
-    		 //gameItems[0].setPosition(0f,.43f/.5f*.8f * 2/height / 10 + .1f, -1 -2.5f+gZ );// - (+ 7.6f/2f ) );
+    		 gZ -= .05;
     		 gameItems[0].setPosition(0f,     tempHeight - .1f ,     -3.6f-gZ ); 
         	 
         	 
@@ -910,147 +553,35 @@ public class DummyGame implements IGameLogic {
        	
     	camera.setPosition(0, 1,-1 - gZ);
        	
-         	//gameItems[0].setPosition(0f, 	terrain.getTheHeight(45f*2.25f + (accumulatedX), 79f*2.25f + (accumulatedZ) , 	0, 0f ,  theHeight), camera.position.z-3.5f );
-         	//gameItems[0].setPosition(0f, 	terrain.getTheHeight((accumulatedX), (accumulatedZ) , containingX, containingZ ,  theHeight), camera.position.z-3.5f );
-            
-    		
-         	/*if (accumulatedZ > (-7.2f * 1))
-         	{
-         		
-         		containingZ = 1 * -7.2f;
-         	}
-         	
-         	if (accumulatedZ > (-7.2f * 2))
-         	{
-         		
-         		containingZ = 2 * -7.2f;
-         	}
-         	if (accumulatedZ > (-7.2f * 3))
-         	{
-         		
-         		containingZ = 3 * -7.2f;
-         	}
-         	if (accumulatedZ > (-7.2f * 4))
-         	{
-         		
-         		containingZ = 4 * -7.2f;
-         	}
-         	if (accumulatedZ > (-7.2f * 5))
-         	{
-         		
-         		containingZ = 5 * -7.2f;
-         	}
-         	if (accumulatedZ > (-7.2f * 6))
-         	{
-         		
-         		containingZ = 6 * -7.2f;
-         	}
-         	if (accumulatedZ > (-7.2f * 7))
-         	{
-         		
-         		containingZ = 7 * -7.2f;
-         	}
-         	
-         	*/
-         	//cameraInc.set(xMove, yMove, zMove);
-    		 
-    		 
-    		 
-    		 
-         	
-         	
+    	
         	 }
     	 
-    	 
-    	 //strafe right
-    	 
-    	 /*
-    	 if (window.isKeyPressed(GLFW_KEY_T)) {
-          	
-    		 cameraInc.x = 1;
-    		 //gameItems[0].setPosition(0f,     .43f/.5f*.8f * 2/.4f / 10 + .1f,      -3.5f-gZ ); 
-    		 
-    		 //for set positiion
-    		 //gBallPositionX = gBallPositionX + .05f;
-    		 //xBallDirectionFinal =  xBallDirectionFinal + .05f;
-    		 
-    		 camera.setPosition(0f, .9f, -2f);
-    		 //cameraInc.set(.05, 0, 0);
-    		//.4  OK OK
-    		//.9f at make terrain
-          	//gameItems[0].setPosition(gBallPositionX,      .43f/.5f*.8f * 2/height / 10 + .1f,      -3.5f-gZ ); 
-    		 
-    	 }
-    	 */
-    	 /*//strafe left
-    	 if (window.isKeyPressed(GLFW_KEY_R)) {
-         	//for set position
-    		 gBallPositionX = gBallPositionX - .05f;
-    		 //for height map of terrain
-    		 xBallDirectionFinal =  xBallDirectionFinal - .05f;
-    		 
-    		 camera.setPosition(-.05f, 1,-1 - gZ);
-    		 //cameraInc.set(-.05, 0, 0);
-    		//.4  OK OK
-          	gameItems[0].setPosition(gBallPositionX,    .43f/.5f*.8f * 2/height / 10 + .1f,      -3.5f-gZ ); 
-    		 
-    	 }
-    	 */
-    	 
-    /*	 if (window.isKeyPressed(GLFW_KEY_Y)) {
-    		 
-    		 gZ += .05f;
-    		 gameItems[0].setPosition(0f,     answer2 ,     -3.6f-gZ ); 
-    		 camera.setPosition(0,1,-1 - gZ);
-    		 
-    	 }
-    	 
-    	*/ 
-    	 
-    	 if (window.isKeyPressed(GLFW_KEY_Z)) {
-    		 
-    		 
-    		 gameItems[0].setPosition(-0.0f,  theAnswer-.0001f  ,  -5.5f-gZ  );
-    		 
-    	 }
-
+    
 		if (window.isKeyPressed(GLFW_KEY_Z)) {
 	 
 	 
-	 	gameItems[0].setPosition(-0.0f,  theAnswer-.0001f  ,  -5.5f-gZ  );
+	 	gameItems[0].setPosition(-0.0f,  theAnswer + 1.5f -.1f  ,  gZ  );
+	 	try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 
 	 
 		}
 
-
-    	 if (window.isKeyPressed(GLFW_KEY_Z)) {
-    		 
-    		 
-    		 gameItems[0].setPosition(-0.0f,  theAnswer-.0001f  ,  -5.5f-gZ  );
-    		 
-    	 }
     	 
-    	 
-    	 
-    	 //clockwise 
+    	
     	 if (window.isKeyPressed(GLFW_KEY_Y)) {
     		 
     		 gRotationHeight = terrain.findXValue(gY1);
     		 gRotationWidth = terrain.findYValue(gY1);
     		 
-    		 //float hypot = Math.sqrt((height*height) + Math.sqrt(width*width));
     		 gDoneRotating = true;
-    		 
-    		 
-    		 
-    		 
+		 
     	 }
-    	 
-    	 
-    	 
-    	 
-    	 
-    	 /////////////////////////////////////////////////////////////////
-    	 //counter clockwise, set new point to check height
+    	
     	 if (window.isKeyPressed(GLFW_KEY_T)) {
     		 
     		
@@ -1135,8 +666,7 @@ public class DummyGame implements IGameLogic {
         	 }
     	 
     	 
-    	 //////
-    	 //clockwise - use this to setup straight part of mesh
+    	 
     	 if (window.isKeyPressed(GLFW_KEY_R)) {
     	 
     		 gY1 = gY1 + 1;
@@ -1163,10 +693,7 @@ public class DummyGame implements IGameLogic {
     	 //rotate
     	 if (window.isKeyPressed(GLFW_KEY_O)) {
     		 
-    		 //terrainObj[0].setRotation(0,gRotateY,0  );
-    		 //gameItems[0].setRotation(0,gRotateY,0);
-    		 //gRotateY = gRotateY - 1;
-    		 
+    		
     		 
     		 
     	 }
@@ -1185,17 +712,9 @@ public class DummyGame implements IGameLogic {
     	 
     	 if (window.isKeyPressed(GLFW_KEY_E)) {
          	
-        	 //change in z   .5
-        	
-        	
         	 
-        	//move upe
         	 float zTerrain = (63.5f *6.299f + (gZ));
-        	 //float zTerrain = 6;//(8f * .6f + gZ);
-        	 
-
-
-        	 
+        	
         	 if (gDoneRotating == true)
            	 {
            		theAnswer = terrain.getTheHeight(gRotationHeight, gRotationWidth 	,0f,0f,theHeight);
@@ -1215,7 +734,7 @@ public class DummyGame implements IGameLogic {
         	 gameItems[0].setScale(3f);
         	
         	 //really should be .5f times three.  This is set to dig in a bit!
-          	 gameItems[0].setPosition(0,  theAnswer +.5f  ,  gZ  );
+          	 gameItems[0].setPosition(0,  theAnswer +1.5f  ,  gZ  );
           	 
           	 
           	System.out.println(theAnswer);
@@ -1247,8 +766,7 @@ public class DummyGame implements IGameLogic {
         	 //change in z
         	
         	
-        	gZ = gZ - 2f;
-        	 
+        	
         	
         	 // 30 should be center
         	 float zTerrain = (64f *6.299f + (gZ));
@@ -1282,13 +800,17 @@ public class DummyGame implements IGameLogic {
    		 
    		 
    		 
-          	gameItems[0].setPosition(0,  theAnswer+.5f*3    ,  -7.f+gZ  );
+          	gameItems[0].setPosition(0,  theAnswer+.5f*3    ,  gZ  );
       
         	 
           	 
           	 
           	 
-          	camera.setPosition(0, 10,20+gZ);
+          	camera.setPosition(0, 10,40+gZ);
+          	
+          	gZ = gZ - 2f;
+       	 
+          	
         	
              try {
     				Thread.sleep(0);
@@ -1296,28 +818,7 @@ public class DummyGame implements IGameLogic {
     				// TODO Auto-generated catch block
     				e.printStackTrace();
     			}
-        ////////////////////
-           	
-          	
-           	
-           
-        	
-        	/////ww////////
-        	
-        	
-        	       		
-        		
-        		
-        	
-        	
-        	//////
-        	
-        	
-        	
-        		
-        		
-        	
-        	
+        
         	
         	
     	}
@@ -1406,67 +907,9 @@ public class DummyGame implements IGameLogic {
         
          
         
-        if (window.isKeyPressed(GLFW_KEY_Z)) {
-            cameraInc.y = -1;
-        } 
-        //zoom
-        /*if (window.isKeyPressed(GLFW_KEY_O)) {
-        	//cameraInc.x = 1;
-        	
-        	 //camera.setRotationZ();
-        	 //camera.changeAngleAroundPlayer(30);
-        	 //cameraInc = camera.calculateCameraPosition();
-        	 System.out.println("X: ");
-        	 System.out.println(cameraInc.x);
-        	 System.out.println(" ");
-        	 System.out.println(cameraInc.y);
-        	 System.out.println(" ");
-        	 System.out.println(cameraInc.z);
-        	 System.out.println(" ");
-        	 
-        	 //cameraInc.x = 1;
-        	 //cameraInc.y = 0;
-        	 //cameraInc.z = -5;
-        	 
-        	 //camera.setPosition(0.5f, 0, 2);
-        	 //camera.moveRotation(0, 1, 0);
-        	 camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
-        	 
-        	//cameraInc = camera.calculateCameraPosition();
-        	//camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
-       	 
-        }
-        */
+       
         
-        /*else if (window.isKeyPressed(GLFW_KEY_M)) {
-        	//cameraInc.x = 1;
-        	
-        	 //camera.setRotationZ();
-        	 //camera.changeAngleAroundPlayer(30);
-        	 //cameraInc = camera.calculateCameraPosition();
-        	
-        	 //cameraInc = camera.calculateCameraPosition();
-        	 System.out.println("X: ");
-        	 System.out.println(cameraInc.x);
-        	 System.out.println(" ");
-        	 System.out.println(cameraInc.y);
-        	 System.out.println(" ");
-        	 System.out.println(cameraInc.z);
-        	 System.out.println(" ");
-        	 //camera.setPosition(0.5f, 0, 2);
-        	 //camera.moveRotation(0, -1, 0);
-        	 
-        	 //camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
-        	 
-        	
-        	//cameraInc.x = 1;
-        	//cameraInc.y = 0;
-        	//cameraInc.z = 0;
-        	//camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
-       	
-        	
         
-        }*/
    
     if (window.isKeyPressed(GLFW_KEY_H)) 
     {
@@ -1488,21 +931,7 @@ public class DummyGame implements IGameLogic {
 		return 0;
 	}
 
-	//private float cos(float yRotationRadius) {
-	//	// TODO Auto-generated method stub
-	//	return 0;
-	//}
-
-	//private float sin(float yRotationRadius) {
-	//	// TODO Auto-generated method stub
-	//	return 0;
-	//}
-
-	//private double (float)sin(float yRotationRadius) {
-	//	// TODO Auto-generated method stub
-	//	return 0;
-	//}
-
+	
 	@Override
     public void update(float interval, MouseInput mouseInput) {
         // Update camera position
@@ -1516,19 +945,7 @@ public class DummyGame implements IGameLogic {
 		
 		
 
-		//if(gZ < 10)
-		//{
-		//	gZ = gZ + .1f;
-		//	gameItems[4].setPosition(0, 0, -gZ);
-		//}
 		
-		
-      //  System.out.println("Hello");
-        // Update camera based on mouse            
-     //   if (mouseInput.isRightButtonPressed()) {
-     //       Vector2f rotVec = mouseInput.getDisplVec();
-     //       camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
-     //   }
     }
 
     @Override
